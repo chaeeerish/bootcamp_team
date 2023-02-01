@@ -3,7 +3,7 @@ hhhhhhhhhhhhhhhhhhhhhiiiiiiiiiiiiii
 
 남은 기능
 이미지 저장(jpg) --> png로 저장(해결)
-붓 이미지 넣기
+~~붓 이미지 넣기~~
 
 DB로 전송
 DB에서 빼오기
