@@ -52,6 +52,8 @@ function onMouseLeave(event){
 // canvas 그림 리셋
 document.getElementById("jsReset").onclick=function(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "white";  
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 // canvas 그림 저장
 function handleCM(event) {
