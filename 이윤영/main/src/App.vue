@@ -1,30 +1,32 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <nav><router-link to="/"></router-link></nav>
+  <router-view />
 </template>
 
+<script></script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #fff;
+  background-color: #2c3e50;
+}
+body {
+  margin: 0px;
 }
 
-nav {
-  padding: 30px;
+@font-face {
+  font-family: korFontLight;
+  src: url(./assets/fonts/SCDreamExtraLight.otf);
 }
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
+@font-face {
+  font-family: korFontRegular;
+  src: url(./assets/fonts/SCDreamRegular.otf);
 }
-
-nav a.router-link-exact-active {
-  color: #42b983;
+@font-face {
+  font-family: korFont2;
+  src: url(./assets/fonts/micegothic.ttf);
 }
 </style>
