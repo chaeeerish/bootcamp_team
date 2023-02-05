@@ -1,37 +1,32 @@
 <template>
-  <transition name="fade">
-    <div v-if="showMain" class="main">
-      <div class="title">
-        <p>내 그림, 그 속의 나</p>
-        <p>
-          내가 그린 그림으로 <br />
-          확인해보는 심리 테스트
-        </p>
-      </div>
-      <p @click="showMain = !showMain" class="start-btn">START</p>
+  <div v-if="showMain" class="main">
+    <div class="title">
+      <p>내 그림, 그 속의 나</p>
+      <p>
+        내가 그린 그림으로 <br />
+        확인해보는 심리 테스트
+      </p>
     </div>
+    <button type="button" @click="toggleMain" class="start-btn">START</button>
+  </div>
+  <transition enter-active-class="animate_animated animate__fadeInUp">
+    <PreStartPage v-if="showPre"></PreStartPage>
   </transition>
-
-  <PreStartPage></PreStartPage>
 </template>
 
 <script>
-import { ref } from "vue";
 import PreStartPage from "./PreStartPage.vue";
 export default {
   name: "MainPage",
   components: { PreStartPage },
-  setup() {
-    const showMain = ref(true);
-
-    const triggerMain = () => {
-      showMain.value = true;
-      setTimeout(() => (showMain.value = false), 3000);
-    };
-    return { showMain, triggerMain };
-  },
   data() {
-    return {};
+    return { showMain: true, showPre: false };
+  },
+  methods: {
+    toggleMain() {
+      this.showMain = !this.showMain;
+      this.showPre = !this.showPre;
+    },
   },
 };
 </script>
@@ -64,5 +59,11 @@ export default {
   right: 0;
   text-align: center;
   bottom: 10%;
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline: inherit;
 }
 </style>
