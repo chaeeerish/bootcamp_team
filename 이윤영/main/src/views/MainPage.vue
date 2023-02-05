@@ -11,6 +11,7 @@
       <p @click="showMain = !showMain" class="start-btn">START</p>
     </div>
   </transition>
+
   <PreStartPage></PreStartPage>
 </template>
 
