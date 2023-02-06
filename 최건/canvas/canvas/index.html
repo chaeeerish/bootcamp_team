@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>PaintJS</title>
+</head>
+<body>
+    <div id="capture_area">
+        <canvas id="jsCanvas" class="canvas"></canvas>
+    </div>
+    <div class="controls">
+        <div class="controls__range">
+            <input type="range" id="jsRange" min="0.1" max="5" step="0.1"/>
+        </div>
+        <div class="controls__btns">
+            <button id="jsMode">Fill</button>
+            <button id="jsSave">Save</button>
+            <button id="jsReset">Reset</button>
+        </div>
+        <div class="controls__colors" id="jsColors">
+            <div
+            class="controls__color jsColor"
+            style="background-color:#2c2c2c"
+            ></div>
+            <div
+            class="controls__color jsColor"
+            style="background-color:white"
+            ></div>
+            <div
+            class="controls__color jsColor"
+            style="background-color:#FF3B30"
+            ></div>
+            <div
+            class="controls__color jsColor"
+            style="background-color:#FF9500"
+            ></div>
+            <div
+            class="controls__color jsColor"
+            style="background-color:#FFCC00"
+            ></div>
+            <div
+            class="controls__color jsColor"
+            style="background-color:#4CD963"
+            ></div>
+            <div
+            class="controls__color jsColor"
+            style="background-color:#5AC8FA"
+            ></div>
+            <div
+            class="controls__color jsColor"
+            style="background-color:#0579FF"
+            ></div>
+            <div
+            class="controls__color jsColor"
+            style="background-color:#5856D6"
+            ></div>
+        </div>
+    </div>
+    <script src="test.js"></script>
+</body>
+</html>
+<!-- <script>
+    html2canvas(document.querySelector("#capture")).then(canvas => {
+        document.body.appendChild(canvas)
+    });
+
+    function partShot() {
+    //특정부분 스크린샷
+    html2canvas(document.getElementById("capture_area"))
+    //id container 부분만 스크린샷
+        .then(function (canvas) {
+            //jpg 결과값
+            drawImg(canvas.toDataURL('image/jpeg'));
+            //이미지 저장
+            saveAs(canvas.toDataURL(), 'file-name.jpg');
+        }).catch(function (err) {
+            console.log(err);
+        });
+    }
+</script> -->
