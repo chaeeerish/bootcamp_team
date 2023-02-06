@@ -9,13 +9,13 @@
     </div>
     <button type="button" @click="toggleMain" class="start-btn">START</button>
   </div>
-  <transition enter-active-class="animate_animated animate__fadeInUp">
-    <PreStartPage v-if="showPre"></PreStartPage>
+  <transition enter-active-class="animate__animated animate__fadeInUp">
+    <PreStartPage v-if="showPre" @clickedNext="onClickNext1"></PreStartPage>
   </transition>
 </template>
 
 <script>
-import PreStartPage from "./PreStartPage.vue";
+import PreStartPage from "../components/PreStartPage.vue";
 export default {
   name: "MainPage",
   components: { PreStartPage },
@@ -26,6 +26,9 @@ export default {
     toggleMain() {
       this.showMain = !this.showMain;
       this.showPre = !this.showPre;
+    },
+    onClickNext1() {
+      this.$emit("clickedNext1");
     },
   },
 };

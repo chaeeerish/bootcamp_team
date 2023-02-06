@@ -1,12 +1,32 @@
 <template>
   <nav><router-link to="/"></router-link></nav>
-  <router-view />
+  <transition
+    leave-active-class="animate__animated animate__fadeOut animate__slower"
+  >
+    <router-view @clickedNext1="onClickTransition" v-if="showMainPage" />
+  </transition>
+  <transition
+    enter-active-class="animate__animated animate__fadeIn animate__slower"
+  >
+    <FirstScene v-if="showFirst"></FirstScene>
+  </transition>
 </template>
 
 <script>
+import FirstScene from "./views/FirstScene.vue";
+
 export default {
   name: "App",
-  components: {},
+  components: { FirstScene },
+  data() {
+    return { showMainPage: true, showFirst: false };
+  },
+  methods: {
+    onClickTransition() {
+      this.showMainPage = !this.showMainPage;
+      this.showFirst = !this.showFirst;
+    },
+  },
 };
 </script>
 <style>
@@ -16,8 +36,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #fff;
-  background-color: #2c3e50;
+  background-color: #151515;
+  position: relative;
 }
+
 body {
   margin: 0px;
 }
