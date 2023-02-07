@@ -1,31 +1,47 @@
 <template>
-  <nav><router-link to="/"></router-link></nav>
-  <transition
-    leave-active-class="animate__animated animate__fadeOut animate__slower"
-  >
-    <router-view @clickedNext1="onClickTransition" v-if="showMainPage" />
-  </transition>
-  <transition
-    enter-active-class="animate__animated animate__fadeIn animate__slower"
-  >
-    <FirstScene v-if="showFirst"></FirstScene>
-  </transition>
+  <nav>
+    <router-link to="/"></router-link>
+    <router-link to="/first"></router-link>
+  </nav>
+  <router-view @clickedNext1="onClickTransition" v-slot="{ Component }">
+    <transition name="route1" mode="out-in">
+      <component :is="Component"></component>
+    </transition>
+  </router-view>
 </template>
 
 <script>
-import FirstScene from "./views/FirstScene.vue";
-
 export default {
   name: "App",
-  components: { FirstScene },
+  components: {},
   data() {
-    return { showMainPage: true, showFirst: false };
+    return {};
   },
   methods: {
     onClickTransition() {
-      this.showMainPage = !this.showMainPage;
-      this.showFirst = !this.showFirst;
+      this.$router.push("/first");
     },
+    leave(event) {
+      event.preventDefault();
+      event.returnValue = "";
+    },
+  },
+
+  // created() {
+  //   this.$watch(
+  //     () => this.$route.params,
+  //     () => {
+  //       // WATCH FOR ROUTE CHANGES
+  //     }
+  //   );
+  // },
+
+  mounted() {
+    window.addEventListener("beforeunload", this.leave);
+  },
+
+  beforeUnmount() {
+    window.removeEventListener("beforeunload", this.leave);
   },
 };
 </script>
@@ -55,5 +71,19 @@ body {
 @font-face {
   font-family: korFont2;
   src: url(./assets/fonts/micegothic.ttf);
+}
+
+/* route transition */
+.route1-enter-from {
+  opacity: 0;
+}
+.route1-enter-active {
+  transition: all 3s ease-in;
+}
+.route1-leave-to {
+  opacity: 0;
+}
+.route1-leave-active {
+  transition: all 3s ease-in;
 }
 </style>
