@@ -39,7 +39,7 @@ padding: 50px 0px;
   .controls .controls__btns {
     margin-bottom: 30px;
   }
-  
+
   .controls__btns button {
     all: unset;
     cursor: pointer;
@@ -55,12 +55,12 @@ padding: 50px 0px;
     font-weight: 800;
     font-size: 12px;
   }
-  
+
   .controls__btns button:active {
     transform: scale(0.98);
   }
-  
+
     .controls .controls__range {
       margin-bottom: 30px;
     }
-    html{cursor: url(draw_icon2.png) 0 32, auto}
+    html{cursor: url(cursor.png) 0 32, auto}

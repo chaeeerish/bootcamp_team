@@ -132,6 +132,23 @@ function handleRangeChange(event) {
   const size = event.target.value;
   ctx.lineWidth = size;
 }
+// 색깔 바꾸기
+const colors = document.getElementsByClassName("jsColor");
+
+for(var i=0; i<colors.length; i++){
+    colors[i].addEventListener("click",handleColorClick)
+}
+//  두 개는 같은 의미
+// Array.from(colors).forEach((color) =>
+//     color.addEventListener("click",handleColorClick)
+//     );
+function handleColorClick(e){
+    const color = e.target.style.backgroundColor;
+    ctx.strokeStyle = color;
+}
+
+
+
 
 // canvas 그림 저장
 function handleCM(event) {
