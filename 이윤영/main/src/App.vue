@@ -1,11 +1,7 @@
 <template>
-  <nav>
-    <router-link to="/"></router-link>
-    <router-link to="/first"></router-link>
-  </nav>
   <router-view @clickedNext1="onClickTransition" v-slot="{ Component }">
-    <transition name="route1" mode="out-in">
-      <component :is="Component"></component>
+    <transition :key="$route.fullPath" mode="out-in">
+      <component :is="Component" />
     </transition>
   </router-view>
 </template>
@@ -56,6 +52,11 @@ export default {
   position: relative;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 body {
   margin: 0px;
 }

@@ -1,22 +1,39 @@
 <template>
-  <div class="first-scene">
+  <div v-if="showFirstScene" class="first-scene">
     <div class="first-text">
-      <p v-if="timedTrigger.Trigger1">당신은 깊은 잠에서 깨어났습니다.</p>
-      <p v-if="timedTrigger.Trigger2">눈 앞에는 벽난로가 있습니다.</p>
-      <p v-if="timedTrigger.Trigger3">
-        벽 난로에는 장작이 타고 있으며 <br />당신의 몸을 따듯하게 녹여 줍니다.
-      </p>
+      <transition name="fade">
+        <p v-if="timedTrigger.Trigger1">당신은 깊은 잠에서 깨어났습니다.</p>
+      </transition>
+      <transition name="fade">
+        <p v-if="timedTrigger.Trigger2">눈 앞에는 벽난로가 있습니다.</p>
+      </transition>
+      <transition name="fade">
+        <p v-if="timedTrigger.Trigger3">
+          벽 난로에는 장작이 타고 있으며 <br />당신의 몸을 따듯하게 녹여 줍니다.
+        </p>
+      </transition>
     </div>
-    <p v-if="timedTrigger.Trigger4" class="touch-text">화면을 터치하세요</p>
-    <div v-if="timedTrigger.Trigger4" class="touch-screen"></div>
+    <transition enter-active-class="animate__animated animate__flash">
+      <p v-if="timedTrigger.Trigger4" class="touch-text">화면을 터치하세요</p>
+    </transition>
+    <div
+      v-if="timedTrigger.Trigger4"
+      @click="moveToFirstNext"
+      class="touch-screen"
+    ></div>
   </div>
+
+  <transition enter-active-class="animate__animated animate__fadeIn">
+    <FirstSceneNext v-if="FirstNext"></FirstSceneNext>
+  </transition>
 </template>
 
 <script>
 import { ref } from "vue";
+import FirstSceneNext from "../components/FirstSceneNext.vue";
 export default {
   name: "FirstScene",
-  components: {},
+  components: { FirstSceneNext },
   setup() {
     const timedTrigger = ref({
       Trigger1: false,
@@ -39,7 +56,13 @@ export default {
     return { timedTrigger };
   },
   data() {
-    return {};
+    return { FirstNext: false, showFirstScene: true };
+  },
+  methods: {
+    moveToFirstNext() {
+      this.showFirstScene = !this.showFirstScene;
+      this.FirstNext = !this.FirstNext;
+    },
   },
 };
 </script>
@@ -49,9 +72,10 @@ export default {
   height: 100vh;
   background-image: url("../assets/images/fireplace.png");
   color: #f2f2f2;
-  font-size: 18px;
+  font-size: 18.5px;
   font-family: korFont2;
   position: relative;
+  line-height: 1.5;
 }
 .first-text {
   display: inline-block;
@@ -67,15 +91,31 @@ export default {
   right: 0;
   text-align: center;
   bottom: 10%;
-  font-size: 19px;
+  font-size: 17px;
 }
 .touch-screen {
   height: 100vh;
   background-color: white;
-  z-index: 1;
-  position: absolute;
+  margin-top: -411px;
+  opacity: 30%;
 }
 p {
-  margin-top: 25px;
+  margin-top: 50px;
+}
+.fade-enter-from {
+  opacity: 0;
+}
+.fade-enter-to {
+  opacity: 1;
+}
+.fade-enter-active {
+  transition: all 1.5s ease;
+}
+.animate__animated.animate__flash {
+  --animate-duration: 3.5s;
+  --animate-repeat: 3;
+}
+.animate__animated.animate__fadeIn {
+  --animate-duration: 3s;
 }
 </style>
