@@ -1,30 +1,32 @@
 <template>
-  <div v-if="showFirstScene" class="first-scene">
-    <div class="first-text">
-      <transition name="fade">
-        <p v-if="timedTrigger.Trigger1">당신은 깊은 잠에서 깨어났습니다.</p>
+  <transition leave-active-class="animate__animated animate__fadeOut">
+    <div v-if="showFirstScene" class="first-scene">
+      <div class="first-text">
+        <transition name="fade">
+          <p v-if="timedTrigger.Trigger1">당신은 깊은 잠에서 깨어났습니다.</p>
+        </transition>
+        <transition name="fade">
+          <p v-if="timedTrigger.Trigger2">눈 앞에는 벽난로가 있습니다.</p>
+        </transition>
+        <transition name="fade">
+          <p v-if="timedTrigger.Trigger3">
+            벽 난로에는 장작이 타고 있으며 <br />당신의 몸을 따듯하게 녹여
+            줍니다.
+          </p>
+        </transition>
+      </div>
+      <transition enter-active-class="animate__animated animate__flash">
+        <p v-if="timedTrigger.Trigger4" class="touch-text">화면을 터치하세요</p>
       </transition>
-      <transition name="fade">
-        <p v-if="timedTrigger.Trigger2">눈 앞에는 벽난로가 있습니다.</p>
-      </transition>
-      <transition name="fade">
-        <p v-if="timedTrigger.Trigger3">
-          벽 난로에는 장작이 타고 있으며 <br />당신의 몸을 따듯하게 녹여 줍니다.
-        </p>
-      </transition>
+      <div
+        v-if="timedTrigger.Trigger4"
+        @click="moveToFirstNext"
+        class="touch-screen"
+      ></div>
     </div>
-    <transition enter-active-class="animate__animated animate__flash">
-      <p v-if="timedTrigger.Trigger4" class="touch-text">화면을 터치하세요</p>
-    </transition>
-    <div
-      v-if="timedTrigger.Trigger4"
-      @click="moveToFirstNext"
-      class="touch-screen"
-    ></div>
-  </div>
-
+  </transition>
   <transition enter-active-class="animate__animated animate__fadeIn">
-    <FirstSceneNext v-if="FirstNext"></FirstSceneNext>
+    <FirstSceneNext v-if="firstNext"></FirstSceneNext>
   </transition>
 </template>
 
@@ -56,12 +58,12 @@ export default {
     return { timedTrigger };
   },
   data() {
-    return { FirstNext: false, showFirstScene: true };
+    return { firstNext: false, showFirstScene: true };
   },
   methods: {
     moveToFirstNext() {
       this.showFirstScene = !this.showFirstScene;
-      this.FirstNext = !this.FirstNext;
+      this.firstNext = !this.firstNext;
     },
   },
 };

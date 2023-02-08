@@ -1,7 +1,7 @@
 <template>
   <div v-if="showMain" class="main">
     <div class="title">
-      <p>내 그림, 그 속의 나</p>
+      <p>마음 스케치</p>
       <p>
         내가 그린 그림으로 <br />
         확인해보는 심리 테스트

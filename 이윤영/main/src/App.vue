@@ -1,6 +1,6 @@
 <template>
   <router-view @clickedNext1="onClickTransition" v-slot="{ Component }">
-    <transition :key="$route.fullPath" mode="out-in">
+    <transition :key="$route.fullPath" name="route1" mode="out-in">
       <component :is="Component" />
     </transition>
   </router-view>
