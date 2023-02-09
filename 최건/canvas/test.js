@@ -62,8 +62,8 @@ document.getElementById("jsReset").onclick=function(){
 // 모바일 터치 좌표 구하기
 function getTouchPos(e) {
     return {
-        x: e.targetTouches[0].clientX - e.target.offsetLeft,
-        y: e.targetTouches[0].clientY - e.target.offsetTop + document.documentElement.scrollTop
+        x: (e.targetTouches[0].clientX - e.target.offsetLeft)*2.258,
+        y: (e.targetTouches[0].clientY - e.target.offsetTop + document.documentElement.scrollTop)*1.5053
     }
 }
 
