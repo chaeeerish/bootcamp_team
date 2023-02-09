@@ -1,7 +1,13 @@
 <template>
   <router-view @clickedNext1="onClickTransition" v-slot="{ Component }">
-    <transition :key="$route.fullPath" name="route1" mode="out-in">
-      <component :is="Component" />
+    <transition
+      :key="$route.fullPath"
+      name="route1"
+      mode="out-in"
+      :enter-active-class="'route1-enter-active'"
+      :leave-active-class="'route1-leave-active'"
+    >
+      <component :is="Component"></component>
     </transition>
   </router-view>
 </template>
@@ -15,7 +21,7 @@ export default {
   },
   methods: {
     onClickTransition() {
-      this.$router.push("/first");
+      this.$router.push({ name: "first" });
     },
     leave(event) {
       event.preventDefault();
@@ -77,12 +83,14 @@ body {
 /* route transition */
 .route1-enter-from {
   opacity: 0;
+  transform: translateX(100px);
 }
 .route1-enter-active {
-  transition: all 3s ease-in;
+  transition: all 3s ease-out;
 }
 .route1-leave-to {
   opacity: 0;
+  transform: translateX(-100px);
 }
 .route1-leave-active {
   transition: all 3s ease-in;

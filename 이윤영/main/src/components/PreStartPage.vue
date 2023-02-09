@@ -37,7 +37,7 @@ export default {
   padding-right: 20px;
   font-size: 20px;
   font-family: korFont2;
-  margin-top: 300px;
+  margin-top: 60%;
 }
 .next-btn {
   font-family: korFontLight;
