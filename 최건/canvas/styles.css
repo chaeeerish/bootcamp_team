@@ -71,9 +71,28 @@ html {
 @media screen and (max-width: 450px) {
   body {
     align-items: center;
+    background-color: #333333;
   }
   .canvas {
-    width: 400px;
-    height: 600px;
+    width: 310px;
+    height: 413.3px;
+  }
+  .controls {
+    margin-top: 10px;
+  }
+  .controls .controls__range {
+    margin-bottom: 10px;
+  }
+  .controls .controls__btns {
+    margin-bottom: 10px;
+  }
+  .controls .controls__colors {
+    display: flex;
+    width: 90%;
+  }
+  .controls__colors .controls__color {
+    width: 36px;
+    height: 40px;
+    border-radius: 0px;
   }
 }
