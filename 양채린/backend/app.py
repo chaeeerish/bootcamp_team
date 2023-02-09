@@ -4,7 +4,7 @@ from db_connect import db
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:1234@127.0.0.1:3306/drawinguser"
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:1234@127.0.0.1:3306/userdrawing"
 app.config['SQLARCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'ekdwls'
 
