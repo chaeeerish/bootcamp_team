@@ -61,8 +61,8 @@ export default {
 <style>
 .first-scene-next {
   height: 100vh;
-  background-image: url("../assets/images/fireplace.png");
-  color: #f2f2f2;
+  background-image: url("../assets/images/example.jpg");
+  color: #000;
   font-size: 18.5px;
   font-family: korFont2;
   position: relative;
