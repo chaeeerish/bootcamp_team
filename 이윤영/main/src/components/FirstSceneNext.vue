@@ -5,7 +5,9 @@
         <p v-if="timedTrigger1.Trigger5">그리고 당신은 깊은 상상에 빠집니다.</p>
       </transition>
       <transition name="fade">
-        <p v-if="timedTrigger1.Trigger6">상상속 당신이 본 나무를 그려주세요.</p>
+        <p v-if="timedTrigger1.Trigger6">
+          상상 속 당신이 본 나무를 그려주세요.
+        </p>
       </transition>
     </div>
     <transition enter-active-class="animate__animated animate__flash">

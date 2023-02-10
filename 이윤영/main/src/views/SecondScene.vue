@@ -1,6 +1,6 @@
 <template>
   <transition>
-    <div v-if="showFirstScene" class="second-scene">
+    <div v-if="showSecondScene" class="second-scene">
       <div class="second-text">
         <transition name="fade">
           <p v-if="timedTrigger.Trigger1">
@@ -23,22 +23,22 @@
       </transition>
       <div
         v-if="timedTrigger.Trigger4"
-        @click="moveToFirstNext"
+        @click="moveToSecondNext"
         class="touch-screen"
       ></div>
     </div>
   </transition>
   <transition enter-active-class="animate__animated animate__fadeIn">
-    <FirstSceneNext v-if="firstNext"></FirstSceneNext>
+    <SecondSceneNext v-if="secondNext"></SecondSceneNext>
   </transition>
 </template>
 
 <script>
 import { ref } from "vue";
-import FirstSceneNext from "../components/FirstSceneNext.vue";
+import SecondSceneNext from "../components/SecondSceneNext.vue";
 export default {
   name: "FirstScene",
-  components: { FirstSceneNext },
+  components: { SecondSceneNext },
   setup() {
     const timedTrigger = ref({
       Trigger1: false,
@@ -61,12 +61,12 @@ export default {
     return { timedTrigger };
   },
   data() {
-    return { firstNext: false, showFirstScene: true };
+    return { secondNext: false, showSecondScene: true };
   },
   methods: {
-    moveToFirstNext() {
-      this.showFirstScene = !this.showFirstScene;
-      this.firstNext = !this.firstNext;
+    moveToSecondNext() {
+      this.showSecondScene = !this.showSecondScene;
+      this.secondNext = !this.secondNext;
     },
   },
 };
