@@ -3,13 +3,17 @@
     <div v-if="showFirstScene" class="first-scene">
       <div class="first-text">
         <transition name="fade">
-          <p v-if="timedTrigger.Trigger1">당신은 깊은 잠에서 깨어났습니다.</p>
+          <p class="texts" v-if="timedTrigger.Trigger1">
+            당신은 깊은 잠에서 깨어났습니다.
+          </p>
         </transition>
         <transition name="fade">
-          <p v-if="timedTrigger.Trigger2">눈 앞에는 벽난로가 있습니다.</p>
+          <p class="texts" v-if="timedTrigger.Trigger2">
+            눈 앞에는 벽난로가 있습니다.
+          </p>
         </transition>
         <transition name="fade">
-          <p v-if="timedTrigger.Trigger3">
+          <p class="texts" v-if="timedTrigger.Trigger3">
             벽 난로에는 장작이 타고 있으며 <br />당신의 몸을 따듯하게 녹여
             줍니다.
           </p>
@@ -72,17 +76,31 @@ export default {
 <style>
 .first-scene {
   height: 100vh;
+  width: 100%;
   background-image: url("../assets/images/example.jpg");
   color: #000;
   font-size: 18.5px;
   font-family: korFont2;
   position: relative;
   line-height: 1.5;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
 }
 .first-text {
   display: inline-block;
 
-  margin-top: 150px;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+  top: 20%;
 }
 .touch-text {
   color: #dededeb9;
@@ -98,10 +116,9 @@ export default {
 .touch-screen {
   height: 100vh;
   background-color: white;
-  margin-top: -411px;
   opacity: 30%;
 }
-p {
+.texts {
   margin-top: 50px;
 }
 .fade-enter-from {

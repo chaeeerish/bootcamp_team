@@ -1,19 +1,19 @@
 <template>
   <transition>
     <div v-if="showSecondScene" class="second-scene">
-      <div class="second-text">
+      <div class="first-text">
         <transition name="fade">
-          <p v-if="timedTrigger.Trigger1">
+          <p class="texts" v-if="timedTrigger.Trigger1">
             시간이 지나고 당신은 <br />자리에서 일어났습니다.
           </p>
         </transition>
         <transition name="fade">
-          <p v-if="timedTrigger.Trigger2">
+          <p class="texts" v-if="timedTrigger.Trigger2">
             책상 앞에 앉아 창문 밖을 보니 <br />날이 벌써 어두워졌습니다.
           </p>
         </transition>
         <transition name="fade">
-          <p v-if="timedTrigger.Trigger3">
+          <p class="texts" v-if="timedTrigger.Trigger3">
             창문 밖에는 귀뚜라미 소리가 들립니다.
           </p>
         </transition>
@@ -75,16 +75,23 @@ export default {
 <style>
 .second-scene {
   height: 100vh;
-  background-image: url("../assets/images/example.jpg");
+  width: 100%;
+  background-image: url("../assets/images/window.png");
   color: #000;
   font-size: 18.5px;
   font-family: korFont2;
   position: relative;
   line-height: 1.5;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
 }
 .second-text {
   display: inline-block;
-
   margin-top: 150px;
 }
 .touch-text {
@@ -97,15 +104,6 @@ export default {
   text-align: center;
   bottom: 10%;
   font-size: 17px;
-}
-.touch-screen {
-  height: 100vh;
-  background-color: white;
-  margin-top: -411px;
-  opacity: 30%;
-}
-p {
-  margin-top: 50px;
 }
 .fade-enter-from {
   opacity: 0;

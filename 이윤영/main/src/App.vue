@@ -55,13 +55,13 @@ export default {
   position: relative;
 }
 
-* {
+body,
+html {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
-body {
-  margin: 0px;
+* {
+  box-sizing: border-box;
 }
 
 @font-face {

@@ -1,11 +1,13 @@
 <template>
-  <div v-if="firstNext1" class="first-scene-next">
+  <div v-if="firstNext1" class="first-scene">
     <div class="first-text">
       <transition name="fade">
-        <p v-if="timedTrigger1.Trigger5">그리고 당신은 깊은 상상에 빠집니다.</p>
+        <p class="texts" v-if="timedTrigger1.Trigger5">
+          그리고 당신은 깊은 상상에 빠집니다.
+        </p>
       </transition>
       <transition name="fade">
-        <p v-if="timedTrigger1.Trigger6">
+        <p class="texts" v-if="timedTrigger1.Trigger6">
           상상 속 당신이 본 나무를 그려주세요.
         </p>
       </transition>
@@ -17,7 +19,7 @@
     <div
       v-if="timedTrigger1.Trigger7"
       @click="moveToFirstPaint"
-      class="touch-screen-two"
+      class="touch-screen"
     ></div>
   </div>
   <transition enter-active-class="animate__animated animate__fadeIn">
@@ -61,15 +63,11 @@ export default {
 </script>
 
 <style>
+/*
 .first-scene-next {
-  height: 100vh;
-  background-image: url("../assets/images/example.jpg");
-  color: #000;
-  font-size: 18.5px;
-  font-family: korFont2;
-  position: relative;
-  line-height: 1.5;
+  
 }
+*/
 .touch-screen-two {
   height: 100vh;
   background-color: white;

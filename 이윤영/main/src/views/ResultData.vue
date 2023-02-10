@@ -4,4 +4,12 @@
   </div>
 </template>
 <script></script>
-<style></style>
+<style>
+.results-data {
+  height: 100vh;
+}
+h1 {
+  margin: 0;
+  padding: 0;
+}
+</style>

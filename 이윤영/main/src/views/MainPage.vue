@@ -1,8 +1,8 @@
 <template>
   <div v-if="showMain" class="main">
     <div class="title">
-      <p>마음 스케치</p>
-      <p>
+      <p class="texts">마음 스케치</p>
+      <p class="texts">
         내가 그린 그림으로 <br />
         확인해보는 심리 테스트
       </p>
@@ -36,6 +36,7 @@ export default {
   background-color: #8787ff;
   height: 100vh;
   color: #2c3e50;
+  overflow: hidden;
 }
 .title {
   text-align: left;
