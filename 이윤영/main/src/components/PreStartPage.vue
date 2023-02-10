@@ -1,18 +1,16 @@
 <template>
-  <transition name="pre">
-    <div class="prepage">
-      <button class="sound-btn">
-        <font-awesome-icon class="icon-sound" icon="fa-solid fa-music" />
-      </button>
-      <div class="text1">
-        <p>
-          <font-awesome-icon icon="fa-solid fa-headphones" /> &#160;몰입감 있는
-          경험을 <br />위해 소리를 높여주세요
-        </p>
-      </div>
-      <button type="button" @click="onClickNext" class="start-btn">NEXT</button>
+  <div class="prepage">
+    <button class="sound-btn">
+      <font-awesome-icon class="icon-sound" icon="fa-solid fa-music" />
+    </button>
+    <div class="text1">
+      <p>
+        ※ 몰입감 있는 경험을 <br />위해 소리를 높여주세요
+        <font-awesome-icon icon="fa-solid fa-headphones" />
+      </p>
     </div>
-  </transition>
+    <button type="button" @click="onClickNext" class="start-btn">NEXT</button>
+  </div>
 </template>
 
 <script>
@@ -20,7 +18,7 @@ export default {
   name: "PreStartPage",
   methods: {
     onClickNext() {
-      this.$emit("clickedNext");
+      this.$router.push({ name: "first" });
     },
   },
 };

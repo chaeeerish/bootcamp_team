@@ -1,5 +1,6 @@
 <template>
   <div class="first-scene-paint"></div>
+  <button type="button" @click="onClickSecond" class="start-btn">NEXT</button>
 </template>
 
 <script>
@@ -9,7 +10,9 @@ export default {
   data() {
     return {};
   },
-  methods: {},
+  methods: {
+    onClickSecond() {},
+  },
 };
 </script>
 

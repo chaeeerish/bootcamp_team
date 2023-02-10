@@ -10,7 +10,7 @@
     <button type="button" @click="toggleMain" class="start-btn">START</button>
   </div>
   <transition enter-active-class="animate__animated animate__fadeInUp">
-    <PreStartPage v-if="showPre" @clickedNext="onClickNext1"></PreStartPage>
+    <PreStartPage v-if="showPre"></PreStartPage>
   </transition>
 </template>
 
@@ -26,9 +26,6 @@ export default {
     toggleMain() {
       this.showMain = !this.showMain;
       this.showPre = !this.showPre;
-    },
-    onClickNext1() {
-      this.$emit("clickedNext1");
     },
   },
 };
