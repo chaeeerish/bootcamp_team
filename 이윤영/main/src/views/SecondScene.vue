@@ -1,17 +1,20 @@
 <template>
-  <transition leave-active-class="animate__animated animate__fadeOut">
-    <div v-if="showFirstScene" class="first-scene">
-      <div class="first-text">
+  <transition>
+    <div v-if="showFirstScene" class="second-scene">
+      <div class="second-text">
         <transition name="fade">
-          <p v-if="timedTrigger.Trigger1">당신은 깊은 잠에서 깨어났습니다.</p>
+          <p v-if="timedTrigger.Trigger1">
+            시간이 지나고 당신은 <br />자리에서 일어났습니다.
+          </p>
         </transition>
         <transition name="fade">
-          <p v-if="timedTrigger.Trigger2">눈 앞에는 벽난로가 있습니다.</p>
+          <p v-if="timedTrigger.Trigger2">
+            책상 앞에 앉아 창문 밖을 보니 <br />날이 벌써 어두워졌습니다.
+          </p>
         </transition>
         <transition name="fade">
           <p v-if="timedTrigger.Trigger3">
-            벽 난로에는 장작이 타고 있으며 <br />당신의 몸을 따듯하게 녹여
-            줍니다.
+            창문 밖에는 귀뚜라미 소리가 들립니다.
           </p>
         </transition>
       </div>
@@ -70,7 +73,7 @@ export default {
 </script>
 
 <style>
-.first-scene {
+.second-scene {
   height: 100vh;
   background-image: url("../assets/images/example.jpg");
   color: #000;
@@ -79,7 +82,7 @@ export default {
   position: relative;
   line-height: 1.5;
 }
-.first-text {
+.second-text {
   display: inline-block;
 
   margin-top: 150px;

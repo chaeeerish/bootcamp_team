@@ -11,7 +11,9 @@ export default {
     return {};
   },
   methods: {
-    onClickSecond() {},
+    onClickSecond() {
+      this.$router.push({ name: "second" });
+    },
   },
 };
 </script>
