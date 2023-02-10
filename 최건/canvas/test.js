@@ -62,21 +62,21 @@ document.getElementById("jsReset").onclick=function(){
 // 모바일 터치 좌표 구하기
 function getTouchPos(e) {
     return {
-        x: (e.targetTouches[0].clientX - e.target.offsetLeft)*2.258,
-        y: (e.targetTouches[0].clientY - e.target.offsetTop + document.documentElement.scrollTop)*1.5053
+        x: e.targetTouches[0].clientX - e.target.offsetLeft,
+        y: e.targetTouches[0].clientY - e.target.offsetTop + document.documentElement.scrollTop
     }
 }
 
 function touchStart(e) {
     e.preventDefault();
-    isPainting = true;
+    painting = true;
     const { x, y } = getTouchPos(e);
     startX = x;
     startY = y;
 }
 
 function touchMove(e) {
-    if(!isPainting) return;
+    if(!painting) return;
     const { x, y } = getTouchPos(e);
     ctx.lineTo(x, y);
     ctx.stroke();
@@ -85,7 +85,7 @@ function touchMove(e) {
 }
 
 function touchEnd(e) {
-    if(!isPainting) return;
+    if(!painting) return;
     ctx.beginPath();
     const { x, y } = getTouchPos(e);
     startX = x;
@@ -93,7 +93,7 @@ function touchEnd(e) {
     ctx.arc(startX, startY, ctx.lineWidth/2, 0, 2*Math.PI);
     ctx.fillStyle = ctx.strokeStyle;
     ctx.fill();
-    isPainting = false;
+    painting = false;
 }
 
 ///////////////////////PC//////////////////////////
