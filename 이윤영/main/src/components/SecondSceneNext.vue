@@ -9,7 +9,8 @@
       </transition>
       <transition name="fade">
         <p class="texts" v-if="timedTrigger1.Trigger6">
-          상상 속 당신이 본 집을 그려주세요.
+          상상 속 당신이 본<br />
+          집을 그려주세요.
         </p>
       </transition>
     </div>

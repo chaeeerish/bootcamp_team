@@ -90,11 +90,25 @@
         </div>
       </div>
     </div>
-    <button type="button-next" @click="onClickSecond" class="button-next">
+    <button type="button-next" @click="toggleModal" class="button-next">
       NEXT
     </button>
   </div>
+  <transition name="zoom">
+    <div v-show="showModal" class="overlay">
+      <div v-show="showModal" class="modal-container">
+        <div class="modal-content">
+          <p>그림을 이대로 제출하시겠습니까?</p>
+        </div>
+        <div class="modal-btn-grid">
+          <button @click="toggleModal" class="modal-btn left">취소</button>
+          <button @click="onClickSecond" class="modal-btn">확인</button>
+        </div>
+      </div>
+    </div>
+  </transition>
 </template>
+
 <script>
 export default {
   name: "PaintingPageSecond",
@@ -106,6 +120,7 @@ export default {
       isMobile: false,
       size: 2.5,
       color: "#2c2c2c",
+      showModal: false,
     };
   },
   setup() {},
@@ -142,6 +157,9 @@ export default {
   },
   unmounted() {},
   methods: {
+    toggleModal() {
+      this.showModal = !this.showModal;
+    }, //확인 모달 창
     onClickSecond() {
       this.$router.push({ name: "result" });
     }, //클릭시 다음 페이지로 넘어가는 버튼
@@ -496,6 +514,78 @@ html {
     width: 36px;
     height: 40px;
     border-radius: 0px;
+  }
+}
+.overlay {
+  position: fixed; /* Positioning and size */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+}
+.modal-container {
+  display: inline-block;
+  position: fixed;
+  width: 310px;
+  background-color: #fff;
+  border-radius: 10px;
+  text-align: center;
+  color: #000;
+  font-family: korFont2;
+  top: 40%;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+.modal-container p {
+  margin: 30px;
+}
+.modal-content {
+  border-bottom: 1px solid #d0d0d0;
+}
+.modal-btn-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+}
+.modal-btn {
+  border-radius: 0 0 10px 0;
+  color: #5490ff;
+  background-color: #fff;
+  border: 0;
+  font-size: 1rem;
+  cursor: pointer;
+  outline: none;
+  min-height: 50px;
+  font-weight: 1000;
+}
+.modal-btn.left {
+  border-radius: 0 0 0 10px;
+  border-right: 1px solid #d0d0d0;
+}
+
+.results-data {
+  height: calc(var(--vh, 1vh) * 100);
+}
+
+.zoom-enter-active,
+.zoom-leave-active {
+  animation-duration: 0.21s;
+  animation-fill-mode: both;
+  animation-name: zoom;
+}
+.zoom-leave-active {
+  animation-direction: reverse;
+}
+@keyframes zoom {
+  from {
+    opacity: 0;
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
   }
 }
 </style>
