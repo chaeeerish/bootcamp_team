@@ -24,16 +24,16 @@
     ></div>
   </div>
   <transition enter-active-class="animate__animated animate__fadeIn">
-    <SecondScenePaint v-if="secondPaint"></SecondScenePaint>
+    <PaintingPageSecond v-if="secondPaint"></PaintingPageSecond>
   </transition>
 </template>
 
 <script>
 import { ref } from "vue";
-import SecondScenePaint from "../components/SecondScenePaint.vue";
+import PaintingPageSecond from "../components/PaintingPageSecond.vue";
 export default {
   name: "SecondSceneNext",
-  components: { SecondScenePaint },
+  components: { PaintingPageSecond },
   methods: {
     moveToSecondPaint() {
       this.secondNext1 = !this.secondNext1;

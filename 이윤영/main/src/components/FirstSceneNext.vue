@@ -23,16 +23,17 @@
     ></div>
   </div>
   <transition enter-active-class="animate__animated animate__fadeIn">
-    <FirstScenePaint v-if="firstPaint"></FirstScenePaint>
+    <PaintingPageFirst v-if="firstPaint"></PaintingPageFirst>
   </transition>
 </template>
 
 <script>
 import { ref } from "vue";
-import FirstScenePaint from "../components/FirstScenePaint.vue";
+import PaintingPageFirst from "../components/PaintingPageFirst.vue";
+
 export default {
   name: "FirstSceneNext",
-  components: { FirstScenePaint },
+  components: { PaintingPageFirst },
   methods: {
     moveToFirstPaint() {
       this.firstNext1 = !this.firstNext1;
