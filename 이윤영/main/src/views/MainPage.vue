@@ -41,9 +41,9 @@ export default {
 
 <style>
 .main {
-  background-color: #8787ff;
+  background-image: url("../assets/images/example.jpg");
   height: calc(var(--vh, 1vh) * 100);
-  color: #2c3e50;
+  color: #1e1e1e;
   overflow: hidden;
 }
 .title {

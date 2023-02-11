@@ -77,7 +77,7 @@ export default {
 .first-scene {
   height: calc(var(--vh, 1vh) * 100);
   width: 100%;
-  background-image: url("../assets/images/example.jpg");
+  background-image: url("../assets/images/fireplace.jpg");
   color: #000;
   font-size: 18.5px;
   font-family: korFont2;
