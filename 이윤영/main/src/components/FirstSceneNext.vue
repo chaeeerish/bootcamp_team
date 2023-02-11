@@ -22,7 +22,7 @@
       class="touch-screen"
     ></div>
   </div>
-  <transition enter-active-class="animate__animated animate__fadeIn">
+  <transition>
     <PaintingPageFirst v-if="firstPaint"></PaintingPageFirst>
   </transition>
 </template>

@@ -28,7 +28,7 @@
       ></div>
     </div>
   </transition>
-  <transition enter-active-class="animate__animated animate__fadeIn">
+  <transition>
     <SecondSceneNext v-if="secondNext"></SecondSceneNext>
   </transition>
 </template>
