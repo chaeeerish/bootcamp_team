@@ -3,8 +3,8 @@ drop table if exists user;
 create table user (
 	userid integer primary key auto_increment,
     username varchar(50) not null,
-    drawing1 LONGBLOB,
-    drawing2 LONGBLOB,
+    image1 LONGBLOB,
+    image2 LONGBLOB,
     result1 LONGBLOB,
     result2 LONGBLOB
 )
