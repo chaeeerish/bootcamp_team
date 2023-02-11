@@ -1,5 +1,5 @@
 <template>
-  <router-view @clickedNext1="onClickTransition" v-slot="{ Component }">
+  <router-view v-slot="{ Component }">
     <transition
       :key="$route.fullPath"
       name="route1"
@@ -20,9 +20,6 @@ export default {
     return {};
   },
   methods: {
-    onClickTransition() {
-      this.$router.push({ name: "first" });
-    },
     leave(event) {
       event.preventDefault();
       event.returnValue = "";
@@ -58,13 +55,13 @@ export default {
   position: relative;
 }
 
-* {
+body,
+html {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
-body {
-  margin: 0px;
+* {
+  box-sizing: border-box;
 }
 
 @font-face {

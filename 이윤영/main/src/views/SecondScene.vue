@@ -1,21 +1,20 @@
 <template>
-  <transition leave-active-class="animate__animated animate__fadeOut">
-    <div v-if="showFirstScene" class="first-scene">
+  <transition>
+    <div v-if="showSecondScene" class="second-scene">
       <div class="first-text">
         <transition name="fade">
           <p class="texts" v-if="timedTrigger.Trigger1">
-            당신은 깊은 잠에서 깨어났습니다.
+            시간이 지나고 당신은 <br />자리에서 일어났습니다.
           </p>
         </transition>
         <transition name="fade">
           <p class="texts" v-if="timedTrigger.Trigger2">
-            눈 앞에는 벽난로가 있습니다.
+            책상 앞에 앉아 창문 밖을 보니 <br />날이 벌써 어두워졌습니다.
           </p>
         </transition>
         <transition name="fade">
           <p class="texts" v-if="timedTrigger.Trigger3">
-            벽 난로에는 장작이 타고 있으며 <br />당신의 몸을 따듯하게 녹여
-            줍니다.
+            창문 밖에는 귀뚜라미 소리가 들립니다.
           </p>
         </transition>
       </div>
@@ -24,22 +23,22 @@
       </transition>
       <div
         v-if="timedTrigger.Trigger4"
-        @click="moveToFirstNext"
+        @click="moveToSecondNext"
         class="touch-screen"
       ></div>
     </div>
   </transition>
   <transition enter-active-class="animate__animated animate__fadeIn">
-    <FirstSceneNext v-if="firstNext"></FirstSceneNext>
+    <SecondSceneNext v-if="secondNext"></SecondSceneNext>
   </transition>
 </template>
 
 <script>
 import { ref } from "vue";
-import FirstSceneNext from "../components/FirstSceneNext.vue";
+import SecondSceneNext from "../components/SecondSceneNext.vue";
 export default {
   name: "FirstScene",
-  components: { FirstSceneNext },
+  components: { SecondSceneNext },
   setup() {
     const timedTrigger = ref({
       Trigger1: false,
@@ -62,22 +61,22 @@ export default {
     return { timedTrigger };
   },
   data() {
-    return { firstNext: false, showFirstScene: true };
+    return { secondNext: false, showSecondScene: true };
   },
   methods: {
-    moveToFirstNext() {
-      this.showFirstScene = !this.showFirstScene;
-      this.firstNext = !this.firstNext;
+    moveToSecondNext() {
+      this.showSecondScene = !this.showSecondScene;
+      this.secondNext = !this.secondNext;
     },
   },
 };
 </script>
 
 <style>
-.first-scene {
+.second-scene {
   height: calc(var(--vh, 1vh) * 100);
   width: 100%;
-  background-image: url("../assets/images/example.jpg");
+  background-image: url("../assets/images/window.png");
   color: #000;
   font-size: 18.5px;
   font-family: korFont2;
@@ -91,16 +90,9 @@ export default {
   -moz-background-size: cover;
   -o-background-size: cover;
 }
-.first-text {
+.second-text {
   display: inline-block;
-
-  position: absolute;
-  margin-left: auto;
-  margin-right: auto;
-  left: 0;
-  right: 0;
-  text-align: center;
-  top: 20%;
+  margin-top: 150px;
 }
 .touch-text {
   color: #dededeb9;
@@ -112,14 +104,6 @@ export default {
   text-align: center;
   bottom: 10%;
   font-size: 17px;
-}
-.touch-screen {
-  height: 100vh;
-  background-color: white;
-  opacity: 30%;
-}
-.texts {
-  margin-top: 50px;
 }
 .fade-enter-from {
   opacity: 0;

@@ -1,18 +1,21 @@
 <template>
-  <transition name="pre">
-    <div class="prepage">
-      <button class="sound-btn">
-        <font-awesome-icon class="icon-sound" icon="fa-solid fa-music" />
-      </button>
-      <div class="text1">
-        <p>
-          <font-awesome-icon icon="fa-solid fa-headphones" /> &#160;몰입감 있는
-          경험을 <br />위해 소리를 높여주세요
-        </p>
-      </div>
-      <button type="button" @click="onClickNext" class="start-btn">NEXT</button>
+  <div class="prepage">
+    <button class="sound-btn">
+      <font-awesome-icon class="icon-sound" icon="fa-solid fa-music" />
+    </button>
+
+    <form method="post" class="name-form">
+      <label class="name-label">시작하기 전, <br />이름을 입력해주세요:</label>
+      <input class="name-input" type="text" required v-model="name" />
+    </form>
+    <div class="text1">
+      <p>
+        ※ 몰입감 있는 경험을 <br />위해 소리를 높여주세요
+        <font-awesome-icon icon="fa-solid fa-volume-high" />
+      </p>
     </div>
-  </transition>
+    <button type="submit" @click="onClickNext" class="start-btn">NEXT</button>
+  </div>
 </template>
 
 <script>
@@ -20,8 +23,17 @@ export default {
   name: "PreStartPage",
   methods: {
     onClickNext() {
-      this.$emit("clickedNext");
+      let name = this.name;
+      if (name.length > 0) {
+        console.log(name);
+        this.$router.push({ name: "first" });
+      } else {
+        alert("이름을 입력해주세요");
+      }
     },
+  },
+  data() {
+    return { name: "" };
   },
 };
 </script>
@@ -29,15 +41,17 @@ export default {
 <style>
 .prepage {
   background-color: #151515;
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+  overflow: hidden;
 }
 .text1 {
   text-align: left;
   display: inline-block;
-  padding-right: 20px;
-  font-size: 20px;
+
+  font-size: 15px;
   font-family: korFont2;
-  margin-top: 60%;
+  margin-top: 150px;
+  color: #ddd;
 }
 .next-btn {
   font-family: korFontLight;
@@ -68,5 +82,38 @@ export default {
 }
 .icon-sound {
   height: 30px;
+}
+.name-form {
+  width: 250px;
+  margin: auto;
+  background: transparent;
+  text-align: left;
+  border-radius: 10px;
+  display: inline-block;
+  margin-top: 150px;
+}
+.name-label {
+  color: #fff;
+  display: inline-block;
+  margin: 25px 0 15px;
+  font-size: 0.6em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: bold;
+  font-family: korFont2;
+  font-size: 18px;
+  line-height: 2;
+}
+.name-input {
+  display: inline-block;
+  padding: 10px 6px;
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  color: #fafafa;
+  font-family: korFont2;
+  background: transparent;
+  font-size: 20px;
 }
 </style>

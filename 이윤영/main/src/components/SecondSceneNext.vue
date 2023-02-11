@@ -1,14 +1,15 @@
 <template>
-  <div v-if="firstNext1" class="first-scene">
+  <div v-if="secondNext1" class="second-scene">
     <div class="first-text">
       <transition name="fade">
         <p class="texts" v-if="timedTrigger1.Trigger5">
-          그리고 당신은 깊은 상상에 빠집니다.
+          그리고 당신은 또 다시 <br />
+          깊은 상상에 빠집니다.
         </p>
       </transition>
       <transition name="fade">
         <p class="texts" v-if="timedTrigger1.Trigger6">
-          상상 속 당신이 본 나무를 그려주세요.
+          상상 속 당신이 본 집을 그려주세요.
         </p>
       </transition>
     </div>
@@ -18,25 +19,25 @@
 
     <div
       v-if="timedTrigger1.Trigger7"
-      @click="moveToFirstPaint"
+      @click="moveToSecondPaint"
       class="touch-screen"
     ></div>
   </div>
   <transition enter-active-class="animate__animated animate__fadeIn">
-    <FirstScenePaint v-if="firstPaint"></FirstScenePaint>
+    <SecondScenePaint v-if="secondPaint"></SecondScenePaint>
   </transition>
 </template>
 
 <script>
 import { ref } from "vue";
-import FirstScenePaint from "../components/FirstScenePaint.vue";
+import SecondScenePaint from "../components/SecondScenePaint.vue";
 export default {
-  name: "FirstSceneNext",
-  components: { FirstScenePaint },
+  name: "SecondSceneNext",
+  components: { SecondScenePaint },
   methods: {
-    moveToFirstPaint() {
-      this.firstNext1 = !this.firstNext1;
-      this.firstPaint = !this.firstPaint;
+    moveToSecondPaint() {
+      this.secondNext1 = !this.secondNext1;
+      this.secondPaint = !this.secondPaint;
     },
   },
   setup() {
@@ -57,21 +58,9 @@ export default {
     return { timedTrigger1 };
   },
   data() {
-    return { firstNext1: true, firstPaint: false };
+    return { secondNext1: true, secondPaint: false };
   },
 };
 </script>
 
-<style>
-/*
-.first-scene-next {
-  
-}
-*/
-.touch-screen-two {
-  height: 100vh;
-  background-color: white;
-  margin-top: -305px;
-  opacity: 30%;
-}
-</style>
+<style></style>

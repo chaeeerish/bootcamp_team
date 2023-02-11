@@ -1,8 +1,8 @@
 <template>
   <div v-if="showMain" class="main">
     <div class="title">
-      <p>마음 스케치</p>
-      <p>
+      <p class="texts">마음 스케치</p>
+      <p class="texts">
         내가 그린 그림으로 <br />
         확인해보는 심리 테스트
       </p>
@@ -10,7 +10,7 @@
     <button type="button" @click="toggleMain" class="start-btn">START</button>
   </div>
   <transition enter-active-class="animate__animated animate__fadeInUp">
-    <PreStartPage v-if="showPre" @clickedNext="onClickNext1"></PreStartPage>
+    <PreStartPage v-if="showPre"></PreStartPage>
   </transition>
 </template>
 
@@ -27,9 +27,14 @@ export default {
       this.showMain = !this.showMain;
       this.showPre = !this.showPre;
     },
-    onClickNext1() {
-      this.$emit("clickedNext1");
-    },
+  },
+  setup() {
+    const setScreenSize = function () {
+      let vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty("--vh", `${vh}px`); //핸드폰 화면에 맞게 vh 새로 설정
+    };
+    setScreenSize();
+    window.addEventListener("resize", () => setScreenSize());
   },
 };
 </script>
@@ -37,8 +42,9 @@ export default {
 <style>
 .main {
   background-color: #8787ff;
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   color: #2c3e50;
+  overflow: hidden;
 }
 .title {
   text-align: left;
