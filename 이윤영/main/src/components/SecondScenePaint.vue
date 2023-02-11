@@ -20,7 +20,7 @@ export default {
 
 <style>
 .second-scene-paint {
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   position: relative;
   background-color: #2b2b2b;
 }

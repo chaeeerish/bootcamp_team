@@ -41,7 +41,7 @@ export default {
 <style>
 .prepage {
   background-color: #151515;
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   overflow: hidden;
 }
 .text1 {

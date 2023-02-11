@@ -75,7 +75,7 @@ export default {
 
 <style>
 .first-scene {
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   width: 100%;
   background-image: url("../assets/images/example.jpg");
   color: #000;

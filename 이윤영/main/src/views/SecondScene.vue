@@ -74,7 +74,7 @@ export default {
 
 <style>
 .second-scene {
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   width: 100%;
   background-image: url("../assets/images/window.png");
   color: #000;
