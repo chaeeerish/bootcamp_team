@@ -36,7 +36,12 @@
     </div>
   </transition>
   <transition>
-    <FirstSceneNext v-if="firstNext"></FirstSceneNext>
+    <FirstSceneNext
+      v-if="firstNext"
+      v-bind:isPlaying="isPlaying"
+      @toggleSound="toggleSound"
+      @turnOffSound="turnOffSound"
+    ></FirstSceneNext>
   </transition>
 </template>
 
@@ -103,6 +108,9 @@ export default {
     moveToFirstNext() {
       this.showFirstScene = !this.showFirstScene;
       this.firstNext = !this.firstNext;
+    },
+    turnOffSound() {
+      this.player.pause();
     },
   },
 };

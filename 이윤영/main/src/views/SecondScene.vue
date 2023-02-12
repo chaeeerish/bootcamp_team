@@ -1,6 +1,12 @@
 <template>
   <transition>
     <div v-if="showSecondScene" class="second-scene">
+      <button v-if="isPlaying" @click="toggleSound" class="sound-btn">
+        <img class="icon-sound" src="../assets/images/volumeon.png" />
+      </button>
+      <button v-else @click="toggleSound" class="sound-btn">
+        <img class="icon-sound" src="../assets/images/volumeoff.png" />
+      </button>
       <div class="first-text">
         <transition name="fade">
           <p class="texts" v-if="timedTrigger.Trigger1">
@@ -60,13 +66,45 @@ export default {
     }, 7000);
     return { timedTrigger };
   },
+  created() {
+    this.current = this.sounds[this.index];
+    this.player.src = this.current.src;
+    this.player.loop = true;
+    setTimeout(() => {
+      this.player.play();
+    }, 1000); //1초 후에 오디오 실행
+  },
   data() {
-    return { secondNext: false, showSecondScene: true };
+    return {
+      secondNext: false,
+      showSecondScene: true,
+      isPlaying: true,
+      current: {},
+      index: 0,
+      sounds: [
+        {
+          title: "MainSound",
+          src: require("../assets/audio/night.mp3"),
+        },
+      ],
+      player: new Audio(),
+    };
   },
   methods: {
+    toggleSound() {
+      this.isPlaying = !this.isPlaying;
+      if (this.isPlaying === !true) {
+        this.player.pause();
+      } else if (this.isPlaying === true) {
+        this.player.play();
+      }
+    }, //음소거
     moveToSecondNext() {
       this.showSecondScene = !this.showSecondScene;
       this.secondNext = !this.secondNext;
+    },
+    turnOffSound() {
+      this.player.pause();
     },
   },
 };

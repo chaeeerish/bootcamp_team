@@ -4,7 +4,7 @@
       <transition name="fade">
         <p class="texts" v-if="timedTrigger1.Trigger5">
           그리고 당신은 또 다시 <br />
-          깊은 상상에 빠집니다.
+          깊은 상상에 빠져듭니다.
         </p>
       </transition>
       <transition name="fade">

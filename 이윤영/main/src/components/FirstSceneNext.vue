@@ -1,15 +1,15 @@
 <template>
   <div v-if="firstNext1" class="first-scene">
-    <button v-if="isPlaying" @click="toggleSound" class="sound-btn">
+    <button v-if="isPlaying" @click="$emit('toggleSound')" class="sound-btn">
       <img class="icon-sound" src="../assets/images/volumeon.png" />
     </button>
-    <button v-else @click="toggleSound" class="sound-btn">
+    <button v-else @click="$emit('toggleSound')" class="sound-btn">
       <img class="icon-sound" src="../assets/images/volumeoff.png" />
     </button>
     <div class="first-text">
       <transition name="fade">
         <p class="texts" v-if="timedTrigger1.Trigger5">
-          그리고 당신은 깊은 상상에 빠집니다.
+          그리고 당신은 깊은 상상에 빠져듭니다.
         </p>
       </transition>
       <transition name="fade">
@@ -29,7 +29,12 @@
     ></div>
   </div>
   <transition>
-    <PaintingPageFirst v-if="firstPaint"></PaintingPageFirst>
+    <PaintingPageFirst
+      v-if="firstPaint"
+      v-bind:isPlaying="isPlaying"
+      @toggleSound1="toggleSound"
+      @turnOffSound="turnOffSound"
+    ></PaintingPageFirst>
   </transition>
 </template>
 
@@ -40,18 +45,17 @@ import PaintingPageFirst from "../components/PaintingPageFirst.vue";
 export default {
   name: "FirstSceneNext",
   components: { PaintingPageFirst },
+  props: ["isPlaying"],
   methods: {
     toggleSound() {
-      this.isPlaying = !this.isPlaying;
-      if (this.isPlaying === !true) {
-        this.player.pause();
-      } else if (this.isPlaying === true) {
-        this.player.play();
-      }
-    }, //음소거
+      this.$emit("toggleSound");
+    },
     moveToFirstPaint() {
       this.firstNext1 = !this.firstNext1;
       this.firstPaint = !this.firstPaint;
+    },
+    turnOffSound() {
+      this.$emit("turnOffSound");
     },
   },
   setup() {
