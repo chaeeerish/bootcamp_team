@@ -119,7 +119,7 @@ export default {
 .second-scene {
   height: calc(var(--vh, 1vh) * 100);
   width: 100%;
-  background-image: url("../assets/images/night.jpg");
+  background-image: url("../assets/images/night2.jpg");
   color: #ffffff;
   font-size: 18.5px;
   font-family: korFont2;

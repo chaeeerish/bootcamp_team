@@ -1,15 +1,15 @@
 <template>
-  <div v-if="showMain" class="main">
-    <div class="title">
-      <p class="texts">마음 스케치</p>
-      <p class="texts">
-        내가 그린 그림으로 <br />
-        확인해보는 심리 테스트
-      </p>
+  <transition>
+    <div v-if="showMain" class="main">
+      <div class="title">
+        <p class="texts">마음 스케치</p>
+        <p class="texts">
+          내가 그린 그림으로 <br />
+          확인해보는 심리 테스트
+        </p>
+      </div>
+      <button type="button" @click="toggleMain" class="start-btn">START</button>
     </div>
-    <button type="button" @click="toggleMain" class="start-btn">START</button>
-  </div>
-  <transition enter-active-class="animate__animated animate__fadeInUp">
     <PreStartPage v-if="showPre"></PreStartPage>
   </transition>
 </template>

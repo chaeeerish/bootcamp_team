@@ -9,12 +9,12 @@
     <div class="first-text">
       <transition name="fade">
         <p class="texts" v-if="timedTrigger1.Trigger5">
-          그리고 당신은 깊은 상상에 빠져듭니다.
+          그리고 당신은 깊은 <br />상상에 빠져듭니다.
         </p>
       </transition>
       <transition name="fade">
         <p class="texts" v-if="timedTrigger1.Trigger6">
-          상상 속 당신이 본 나무를 그려주세요.
+          상상 속 당신이 본 <br />나무를 그려주세요.
         </p>
       </transition>
     </div>
