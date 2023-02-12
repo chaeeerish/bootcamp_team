@@ -1,5 +1,11 @@
 <template>
   <div v-if="secondNext1" class="second-scene">
+    <button v-if="isPlaying" @click="$emit('toggleSound')" class="sound-btn">
+      <img class="icon-sound" src="../assets/images/volumeon.png" />
+    </button>
+    <button v-else @click="$emit('toggleSound')" class="sound-btn">
+      <img class="icon-sound" src="../assets/images/volumeoff.png" />
+    </button>
     <div class="first-text">
       <transition name="fade">
         <p class="texts" v-if="timedTrigger1.Trigger5">
@@ -25,7 +31,12 @@
     ></div>
   </div>
   <transition>
-    <PaintingPageSecond v-if="secondPaint"></PaintingPageSecond>
+    <PaintingPageSecond
+      v-if="secondPaint"
+      v-bind:isPlaying="isPlaying"
+      @toggleSound1="toggleSound"
+      @turnOffSound="turnOffSound"
+    ></PaintingPageSecond>
   </transition>
 </template>
 
@@ -35,10 +46,17 @@ import PaintingPageSecond from "../components/PaintingPageSecond.vue";
 export default {
   name: "SecondSceneNext",
   components: { PaintingPageSecond },
+  props: ["isPlaying"],
   methods: {
     moveToSecondPaint() {
       this.secondNext1 = !this.secondNext1;
       this.secondPaint = !this.secondPaint;
+    },
+    toggleSound() {
+      this.$emit("toggleSound");
+    },
+    turnOffSound() {
+      this.$emit("turnOffSound");
     },
   },
   setup() {

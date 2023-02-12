@@ -35,6 +35,16 @@
               />
             </button>
           </div>
+          <button
+            v-if="isPlaying"
+            @click="$emit('toggleSound1')"
+            class="sound-btn1"
+          >
+            <img class="icon-sound1" src="../assets/images/volumeon.png" />
+          </button>
+          <button v-else @click="$emit('toggleSound1')" class="sound-btn1">
+            <img class="icon-sound1" src="../assets/images/volumeoff.png" />
+          </button>
         </div>
         <div class="controls__colors" id="jsColors" ref="jsColors">
           <div
@@ -113,6 +123,7 @@
 export default {
   name: "PaintingPageSecond",
   components: {},
+  props: ["isPlaying"],
   data() {
     return {
       ctx: null,
@@ -161,6 +172,7 @@ export default {
       this.showModal = !this.showModal;
     }, //확인 모달 창
     onClickSecond() {
+      this.$emit("turnOffSound");
       this.$router.push({ name: "result" });
     }, //클릭시 다음 페이지로 넘어가는 버튼
     onMouseMove(event) {
@@ -416,7 +428,19 @@ body {
   border-radius: 15px;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
 }
-
+.sound-btn1 {
+  color: #ffffff;
+  border: none;
+  padding: 0;
+  display: inline-block;
+  background: none;
+  margin-top: -10px;
+  padding-left: 5px;
+}
+.icon-sound1 {
+  height: 40px;
+  color: #fff;
+}
 .controls {
   margin-top: 80px;
   display: flex;

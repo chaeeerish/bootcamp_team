@@ -35,7 +35,12 @@
     </div>
   </transition>
   <transition>
-    <SecondSceneNext v-if="secondNext"></SecondSceneNext>
+    <SecondSceneNext
+      v-if="secondNext"
+      v-bind:isPlaying="isPlaying"
+      @toggleSound="toggleSound"
+      @turnOffSound="turnOffSound"
+    ></SecondSceneNext>
   </transition>
 </template>
 
@@ -72,7 +77,7 @@ export default {
     this.player.loop = true;
     setTimeout(() => {
       this.player.play();
-    }, 1000); //1초 후에 오디오 실행
+    }, 2000); //2초 후에 오디오 실행
   },
   data() {
     return {
