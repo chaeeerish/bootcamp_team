@@ -20,10 +20,27 @@ export default {
   name: "MainPage",
   components: { PreStartPage },
   data() {
-    return { showMain: true, showPre: false };
+    return {
+      current: {},
+      index: 0,
+      showMain: true,
+      showPre: false,
+      sounds: [
+        {
+          title: "MainSound",
+          src: require("../assets/audio/start.mp3"),
+        },
+      ],
+      player: new Audio(),
+    };
+  },
+  created() {
+    this.current = this.sounds[this.index];
+    this.player.src = this.current.src;
   },
   methods: {
     toggleMain() {
+      this.player.play();
       this.showMain = !this.showMain;
       this.showPre = !this.showPre;
     },

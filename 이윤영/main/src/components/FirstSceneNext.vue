@@ -1,5 +1,11 @@
 <template>
   <div v-if="firstNext1" class="first-scene">
+    <button v-if="isPlaying" @click="toggleSound" class="sound-btn">
+      <img class="icon-sound" src="../assets/images/volumeon.png" />
+    </button>
+    <button v-else @click="toggleSound" class="sound-btn">
+      <img class="icon-sound" src="../assets/images/volumeoff.png" />
+    </button>
     <div class="first-text">
       <transition name="fade">
         <p class="texts" v-if="timedTrigger1.Trigger5">
@@ -35,6 +41,14 @@ export default {
   name: "FirstSceneNext",
   components: { PaintingPageFirst },
   methods: {
+    toggleSound() {
+      this.isPlaying = !this.isPlaying;
+      if (this.isPlaying === !true) {
+        this.player.pause();
+      } else if (this.isPlaying === true) {
+        this.player.play();
+      }
+    }, //음소거
     moveToFirstPaint() {
       this.firstNext1 = !this.firstNext1;
       this.firstPaint = !this.firstPaint;

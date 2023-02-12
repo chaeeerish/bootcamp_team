@@ -1,7 +1,10 @@
 <template>
   <div class="prepage">
-    <button class="sound-btn">
-      <font-awesome-icon class="icon-sound" icon="fa-solid fa-music" />
+    <button v-if="isPlaying" @click="toggleSound" class="sound-btn">
+      <img class="icon-sound" src="../assets/images/volumeon.png" />
+    </button>
+    <button v-else @click="toggleSound" class="sound-btn">
+      <img class="icon-sound" src="../assets/images/volumeoff.png" />
     </button>
 
     <form method="post" class="name-form">
@@ -25,15 +28,40 @@ export default {
     onClickNext() {
       let name = this.name;
       if (name.length > 0) {
-        console.log(name);
-        this.$router.push({ name: "first" });
+        if (this.isPlaying === true) {
+          this.player.play();
+          console.log(name);
+          this.$router.push({ name: "first" });
+        } else {
+          console.log(name);
+          this.$router.push({ name: "first" });
+        }
       } else {
         alert("이름을 입력해주세요");
       }
     },
+    toggleSound() {
+      this.isPlaying = !this.isPlaying;
+    }, //음소거
   },
   data() {
-    return { name: "" };
+    return {
+      name: "",
+      current: {},
+      index: 0,
+      isPlaying: true,
+      sounds: [
+        {
+          title: "MainSound",
+          src: require("../assets/audio/click.mp3"),
+        },
+      ],
+      player: new Audio(),
+    };
+  },
+  created() {
+    this.current = this.sounds[this.index];
+    this.player.src = this.current.src;
   },
 };
 </script>
@@ -82,6 +110,7 @@ export default {
 }
 .icon-sound {
   height: 30px;
+  color: #fff;
 }
 .name-form {
   width: 250px;

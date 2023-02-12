@@ -98,7 +98,10 @@
     <div v-show="showModal" class="overlay">
       <div v-show="showModal" class="modal-container">
         <div class="modal-content">
-          <p>그림을 이대로 제출하시겠습니까?</p>
+          <p>
+            그림을 이대로 <br />
+            제출하시겠습니까?
+          </p>
         </div>
         <div class="modal-btn-grid">
           <button @click="toggleModal" class="modal-btn left">취소</button>
@@ -497,7 +500,7 @@ html {
 .modal-container {
   display: inline-block;
   position: fixed;
-  width: 310px;
+  width: 250px;
   background-color: #fff;
   border-radius: 10px;
   text-align: center;
@@ -508,12 +511,18 @@ html {
   right: 0;
   margin-left: auto;
   margin-right: auto;
+  -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
 }
 .modal-container p {
   margin: 30px;
 }
 .modal-content {
   border-bottom: 1px solid #d0d0d0;
+  line-height: 1.5;
 }
 .modal-btn-grid {
   display: grid;
