@@ -8,7 +8,6 @@ import {
   faMusic,
   faRotateRight,
 } from "@fortawesome/free-solid-svg-icons";
-import "animate.css";
 library.add(faVolumeHigh, faMusic, faRotateRight);
 createApp(App)
   .use(router)

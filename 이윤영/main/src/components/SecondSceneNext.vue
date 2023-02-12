@@ -9,7 +9,8 @@
       </transition>
       <transition name="fade">
         <p class="texts" v-if="timedTrigger1.Trigger6">
-          상상 속 당신이 본 집을 그려주세요.
+          상상 속 당신이 본<br />
+          집을 그려주세요.
         </p>
       </transition>
     </div>
@@ -23,7 +24,7 @@
       class="touch-screen"
     ></div>
   </div>
-  <transition enter-active-class="animate__animated animate__fadeIn">
+  <transition>
     <PaintingPageSecond v-if="secondPaint"></PaintingPageSecond>
   </transition>
 </template>

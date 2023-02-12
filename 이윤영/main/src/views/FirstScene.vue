@@ -1,5 +1,5 @@
 <template>
-  <transition leave-active-class="animate__animated animate__fadeOut">
+  <transition>
     <div v-if="showFirstScene" class="first-scene">
       <div class="first-text">
         <transition name="fade">
@@ -19,7 +19,7 @@
           </p>
         </transition>
       </div>
-      <transition enter-active-class="animate__animated animate__flash">
+      <transition>
         <p v-if="timedTrigger.Trigger4" class="touch-text">화면을 터치하세요</p>
       </transition>
       <div
@@ -29,7 +29,7 @@
       ></div>
     </div>
   </transition>
-  <transition enter-active-class="animate__animated animate__fadeIn">
+  <transition>
     <FirstSceneNext v-if="firstNext"></FirstSceneNext>
   </transition>
 </template>
@@ -77,7 +77,7 @@ export default {
 .first-scene {
   height: calc(var(--vh, 1vh) * 100);
   width: 100%;
-  background-image: url("../assets/images/example.jpg");
+  background-image: url("../assets/images/fireplace.jpg");
   color: #000;
   font-size: 18.5px;
   font-family: korFont2;
