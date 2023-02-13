@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, url_for, g, flash, session, redirect, make_response
+from flask import Blueprint, render_template, request, url_for, g, flash, session, redirect, make_response, jsonify
 import json
 from db_connect import db
 from werkzeug.utils import redirect
@@ -20,10 +20,13 @@ session
 @bp.before_app_request
 def load_sessioned_in_user():
     userid = session.get('userid')
+    # test용
+    # userid = '1'
+    
     if userid is None:
         g.user = None
     else:
-        g.user = db.session.query(User).filter(User.id == userid).first()
+        g.user = db.session.query(User).filter(User.userid == userid).first()
 
 
 def convertToBinaryData(filename):
@@ -32,21 +35,28 @@ def convertToBinaryData(filename):
         binaryData = file.read()
     return binaryData
 
-@bp.route('/main/')
+@bp.route('/main/', methods=['POST', 'GET'])
 def showMain():
     session.clear()
     if request.method == 'GET':
         return render_template('main.html')
     else: # POST
+        '''
+        request
+            username
+
+            ex) {"username": "yang"}
+        '''
         # 세션 구현 해야함
-        session['username'] = request.args['username']
+        params = request.get_json()
+        session['username'] = params['username']
 
         # insert
-        user = User(username=request.args['username'])
+        user = User(username=params['username'])
         db.session.add(user)
         db.session.commit()
 
-        session['userid'] = user.id
+        session['userid'] = user.userid
 
         print(session['userid'])
         print(session['username'])
@@ -56,9 +66,11 @@ def showMain():
 
 @bp.route('/first/', methods=['POST', 'GET'])
 def showFirst():
+    if g.user == None:
+        return redirect(url_for('views.showMain'))
     if request.method == 'POST':
         params = request.get_json()
-        str = params['images']
+        str = params['image']
 
         imgdata = base64.b64decode(str)
         filename = 'receivedimage.jpg'  # I assume you have a way of picking unique filenames
@@ -82,8 +94,8 @@ def showFirst():
         resultText = 'great!'
 
         # modify
-        user = User.query.get_or_404(session['id'])
-        user.drawing1 = picture
+        user = User.query.get_or_404(session['userid'])
+        user.image1 = picture
         user.result1 = resultText
         db.session.commit()
 
@@ -92,23 +104,25 @@ def showFirst():
 
 @bp.route('/second/', methods=['POST', 'GET'])
 def showSecond():
+    if g.user == None:
+        return redirect(url_for('views.showMain'))
     if request.method == 'POST':
         
         params = request.get_json()
-        str = params['images']
+        str = params['image']
 
         imgdata = base64.b64decode(str)
         filename = 'some_image.jpg'  # I assume you have a way of picking unique filenames
         with open(filename, 'wb') as f:
             f.write(imgdata)
 
-        picture = convertToBinaryData(filename)
+        picture = convertToBinaryData(filename) # 이미지를 binary로 변환하여 db에 저장하였다.
 
         # 모델 넣을 자리
         resultText = 'great!'
 
         # modify
-        g.user.drawing2 = picture
+        g.user.image2 = picture
         g.user.result2 = resultText
         db.session.commit()
         
@@ -117,6 +131,8 @@ def showSecond():
 
 @bp.route('/third/', methods=['POST', 'GET'])
 def showThird():
+    if g.user == None:
+        return redirect(url_for('views.showMain'))
     if request.method == 'GET':
         # response로 .. ?
         '''
@@ -125,26 +141,54 @@ def showThird():
         resp.headers['X-Something'] = 'A value'
         return resp
         '''
-        '''
-        <version 1>
+
+        str_base641 = base64.b64encode(g.user.image1)
+        base64_str1 = str_base641.decode('utf-8')
+
+        str_base642 = base64.b64encode(g.user.image2)
+        base64_str2 = str_base642.decode('utf-8')
+
+        # version 1
         response = {
             "username": g.user.username,
-            "image1": g.user.image1,
-            "image2": g.user.image2,
+            "image1": base64_str1,
+            "image2": base64_str2,
             "result1": g.user.result1,
             "result2": g.user.result2
         }
-
-        responseJson = json.dumps(response)
-        # print(responseJson)
-        session.clear()       
         
-        return render_template('forth.html', var=responseJson)
+        print(type(g.user))
+        print(type(g.user.username))
+        print(type(base64_str1))
+        print(type(base64_str1))
+        print(type(g.user.result1))
+        print(type(g.user.result2))
 
         '''
-        response = make_response(render_template('forth.html'))
-        response.body
+        sitename_base64_str  = 'd2ViaXNmcmVl'
+        sitename_bytes = base64.b64decode(sitename_base64_str )
+        sitename = sitename_bytes .decode('ascii')
+        '''    
+
+        # version 1
+        return jsonify({
+            "username": g.user.username,
+            "image1": base64_str1,
+            "image2": base64_str2,
+            "result1": g.user.result1,
+            "result2": g.user.result2
+        }), 200
+
+        # version 2
+        # return json.dumps(response)
 
         # 혹은 response에 담아서 보내는 방식도 있음.
-
         # redirect(location, statuscode, response)
+
+@bp.route('/forth/', methods=['POST', 'GET'])
+def showForth():
+    if g.user == None:
+        return redirect(url_for('views.showMain'))
+    if request.method == 'GET':
+        session.clear()       
+        return render_template("forth.html")

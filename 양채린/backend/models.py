@@ -6,5 +6,5 @@ class User(db.Model):
     username = db.Column(db.String(50), nullable=False)
     image1 = db.Column(db.BLOB)
     image2 = db.Column(db.BLOB)
-    result1 = db.Column(db.BLOB)
-    result2 = db.Column(db.BLOB)
+    result1 = db.Column(db.TEXT)
+    result2 = db.Column(db.TEXT)
