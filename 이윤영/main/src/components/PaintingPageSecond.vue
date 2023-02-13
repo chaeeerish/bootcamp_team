@@ -1,109 +1,111 @@
 <template>
-  <div class="painting-page">
-    <div class="painting-content">
-      <div id="canvas_Wrapper">
-        <canvas
-          ref="jsCanvas"
-          width="700"
-          height="700"
-          id="jsCanvas"
-          class="canvas"
-        ></canvas>
-      </div>
-      <div class="controls">
-        <div class="controls-container">
-          <div class="controls__range">
-            <input
-              type="range"
-              id="jsRange"
-              min="0.1"
-              max="5"
-              step="0.1"
-              v-model="size"
-            />
-          </div>
-          <div class="controls__btns">
-            <button
-              type="button"
-              class="reset-btn"
-              id="jsReset"
-              @click="resetCanvas"
-            >
-              <font-awesome-icon
-                class="reset-icon"
-                icon="fa-solid fa-rotate-right"
+  <transition name="first">
+    <div class="painting-page">
+      <div class="painting-content">
+        <div id="canvas_Wrapper">
+          <canvas
+            ref="jsCanvas"
+            width="700"
+            height="700"
+            id="jsCanvas"
+            class="canvas"
+          ></canvas>
+        </div>
+        <div class="controls">
+          <div class="controls-container">
+            <div class="controls__range">
+              <input
+                type="range"
+                id="jsRange"
+                min="0.1"
+                max="5"
+                step="0.1"
+                v-model="size"
               />
+            </div>
+            <div class="controls__btns">
+              <button
+                type="button"
+                class="reset-btn"
+                id="jsReset"
+                @click="resetCanvas"
+              >
+                <font-awesome-icon
+                  class="reset-icon"
+                  icon="fa-solid fa-rotate-right"
+                />
+              </button>
+            </div>
+            <button
+              v-if="isPlaying"
+              @click="$emit('toggleSound1')"
+              class="sound-btn1"
+            >
+              <img class="icon-sound1" src="../assets/images/volumeon.png" />
+            </button>
+            <button v-else @click="$emit('toggleSound1')" class="sound-btn1">
+              <img class="icon-sound1" src="../assets/images/volumeoff.png" />
             </button>
           </div>
-          <button
-            v-if="isPlaying"
-            @click="$emit('toggleSound1')"
-            class="sound-btn1"
-          >
-            <img class="icon-sound1" src="../assets/images/volumeon.png" />
-          </button>
-          <button v-else @click="$emit('toggleSound1')" class="sound-btn1">
-            <img class="icon-sound1" src="../assets/images/volumeoff.png" />
-          </button>
-        </div>
-        <div class="controls__colors" id="jsColors" ref="jsColors">
-          <div
-            class="controls__color jsColor"
-            @click="handleColorClick"
-            style="background-color: #2c2c2c"
-          ></div>
-          <div
-            class="controls__color jsColor"
-            @click="handleColorClick"
-            style="background-color: white"
-          ></div>
-          <div
-            class="controls__color jsColor"
-            @click="handleColorClick"
-            style="background-color: #ff3b30"
-          ></div>
-          <div
-            class="controls__color jsColor"
-            @click="handleColorClick"
-            style="background-color: #ff9500"
-          ></div>
-          <div
-            class="controls__color jsColor"
-            @click="handleColorClick"
-            style="background-color: #ffcc00"
-          ></div>
-          <div
-            class="controls__color jsColor"
-            @click="handleColorClick"
-            style="background-color: #4cd963"
-          ></div>
-          <div
-            class="controls__color jsColor"
-            @click="handleColorClick"
-            style="background-color: #5ac8fa"
-          ></div>
-          <div
-            class="controls__color jsColor"
-            @click="handleColorClick"
-            style="background-color: #0579ff"
-          ></div>
-          <div
-            class="controls__color jsColor"
-            @click="handleColorClick"
-            style="background-color: #5856d6"
-          ></div>
-          <div
-            class="controls__color jsColor"
-            @click="handleColorClick"
-            style="background-color: #884d1d"
-          ></div>
+          <div class="controls__colors" id="jsColors" ref="jsColors">
+            <div
+              class="controls__color jsColor"
+              @click="handleColorClick"
+              style="background-color: #2c2c2c"
+            ></div>
+            <div
+              class="controls__color jsColor"
+              @click="handleColorClick"
+              style="background-color: white"
+            ></div>
+            <div
+              class="controls__color jsColor"
+              @click="handleColorClick"
+              style="background-color: #ff3b30"
+            ></div>
+            <div
+              class="controls__color jsColor"
+              @click="handleColorClick"
+              style="background-color: #ff9500"
+            ></div>
+            <div
+              class="controls__color jsColor"
+              @click="handleColorClick"
+              style="background-color: #ffcc00"
+            ></div>
+            <div
+              class="controls__color jsColor"
+              @click="handleColorClick"
+              style="background-color: #4cd963"
+            ></div>
+            <div
+              class="controls__color jsColor"
+              @click="handleColorClick"
+              style="background-color: #5ac8fa"
+            ></div>
+            <div
+              class="controls__color jsColor"
+              @click="handleColorClick"
+              style="background-color: #0579ff"
+            ></div>
+            <div
+              class="controls__color jsColor"
+              @click="handleColorClick"
+              style="background-color: #5856d6"
+            ></div>
+            <div
+              class="controls__color jsColor"
+              @click="handleColorClick"
+              style="background-color: #884d1d"
+            ></div>
+          </div>
         </div>
       </div>
+      <button type="button-next" @click="toggleModal" class="button-next">
+        NEXT
+      </button>
     </div>
-    <button type="button-next" @click="toggleModal" class="button-next">
-      NEXT
-    </button>
-  </div>
+  </transition>
   <transition name="zoom">
     <div v-show="showModal" class="overlay">
       <div v-show="showModal" class="modal-container">

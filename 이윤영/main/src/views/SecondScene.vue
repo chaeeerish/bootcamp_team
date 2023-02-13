@@ -1,5 +1,5 @@
 <template>
-  <transition>
+  <transition name="first">
     <div v-if="showSecondScene" class="second-scene">
       <button v-if="isPlaying" @click="toggleSound" class="sound-btn">
         <img class="icon-sound" src="../assets/images/volumeon.png" />
@@ -34,14 +34,13 @@
       ></div>
     </div>
   </transition>
-  <transition>
-    <SecondSceneNext
-      v-if="secondNext"
-      v-bind:isPlaying="isPlaying"
-      @toggleSound="toggleSound"
-      @turnOffSound="turnOffSound"
-    ></SecondSceneNext>
-  </transition>
+
+  <SecondSceneNext
+    v-if="secondNext"
+    v-bind:isPlaying="isPlaying"
+    @toggleSound="toggleSound"
+    @turnOffSound="turnOffSound"
+  ></SecondSceneNext>
 </template>
 
 <script>
@@ -157,11 +156,23 @@ export default {
 .fade-enter-active {
   transition: all 1.5s ease;
 }
-.animate__animated.animate__flash {
-  --animate-duration: 3.5s;
-  --animate-repeat: 3;
+
+.first-enter-from {
+  opacity: 0;
 }
-.animate__animated.animate__fadeIn {
-  --animate-duration: 3s;
+.first-enter-to {
+  opacity: 1;
+}
+.first-enter-active {
+  transition: all 1s ease;
+}
+.first-leave-from {
+  opacity: 1;
+}
+.first-leave-to {
+  opacity: 0;
+}
+.first-leave-active {
+  transition: all 1s ease;
 }
 </style>

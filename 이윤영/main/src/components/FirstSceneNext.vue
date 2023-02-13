@@ -1,41 +1,43 @@
 <template>
-  <div v-if="firstNext1" class="first-scene">
-    <button v-if="isPlaying" @click="$emit('toggleSound')" class="sound-btn">
-      <img class="icon-sound" src="../assets/images/volumeon.png" />
-    </button>
-    <button v-else @click="$emit('toggleSound')" class="sound-btn">
-      <img class="icon-sound" src="../assets/images/volumeoff.png" />
-    </button>
-    <div class="first-text">
-      <transition name="fade">
-        <p class="texts" v-if="timedTrigger1.Trigger5">
-          그리고 당신은 깊은 <br />상상에 빠져듭니다.
+  <transition name="first">
+    <div v-if="firstNext1" class="first-scene">
+      <button v-if="isPlaying" @click="$emit('toggleSound')" class="sound-btn">
+        <img class="icon-sound" src="../assets/images/volumeon.png" />
+      </button>
+      <button v-else @click="$emit('toggleSound')" class="sound-btn">
+        <img class="icon-sound" src="../assets/images/volumeoff.png" />
+      </button>
+      <div class="first-text">
+        <transition name="fade">
+          <p class="texts" v-if="timedTrigger1.Trigger5">
+            그리고 당신은 깊은 <br />상상에 빠져듭니다.
+          </p>
+        </transition>
+        <transition name="fade">
+          <p class="texts" v-if="timedTrigger1.Trigger6">
+            상상 속 당신이 본 <br />나무를 그려주세요.
+          </p>
+        </transition>
+      </div>
+      <transition enter-active-class="animate__animated animate__flash">
+        <p v-if="timedTrigger1.Trigger7" class="touch-text">
+          화면을 터치하세요
         </p>
       </transition>
-      <transition name="fade">
-        <p class="texts" v-if="timedTrigger1.Trigger6">
-          상상 속 당신이 본 <br />나무를 그려주세요.
-        </p>
-      </transition>
-    </div>
-    <transition enter-active-class="animate__animated animate__flash">
-      <p v-if="timedTrigger1.Trigger7" class="touch-text">화면을 터치하세요</p>
-    </transition>
 
-    <div
-      v-if="timedTrigger1.Trigger7"
-      @click="moveToFirstPaint"
-      class="touch-screen"
-    ></div>
-  </div>
-  <transition>
-    <PaintingPageFirst
-      v-if="firstPaint"
-      v-bind:isPlaying="isPlaying"
-      @toggleSound1="toggleSound"
-      @turnOffSound="turnOffSound"
-    ></PaintingPageFirst>
+      <div
+        v-if="timedTrigger1.Trigger7"
+        @click="moveToFirstPaint"
+        class="touch-screen"
+      ></div>
+    </div>
   </transition>
+  <PaintingPageFirst
+    v-if="firstPaint"
+    v-bind:isPlaying="isPlaying"
+    @toggleSound1="toggleSound"
+    @turnOffSound="turnOffSound"
+  ></PaintingPageFirst>
 </template>
 
 <script>

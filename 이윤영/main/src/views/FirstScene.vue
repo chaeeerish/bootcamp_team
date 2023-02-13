@@ -1,5 +1,5 @@
 <template>
-  <transition>
+  <transition name="first">
     <div v-if="showFirstScene" class="first-scene">
       <button v-if="isPlaying" @click="toggleSound" class="sound-btn">
         <img class="icon-sound" src="../assets/images/volumeon.png" />
@@ -35,14 +35,13 @@
       ></div>
     </div>
   </transition>
-  <transition>
-    <FirstSceneNext
-      v-if="firstNext"
-      v-bind:isPlaying="isPlaying"
-      @toggleSound="toggleSound"
-      @turnOffSound="turnOffSound"
-    ></FirstSceneNext>
-  </transition>
+
+  <FirstSceneNext
+    v-if="firstNext"
+    v-bind:isPlaying="isPlaying"
+    @toggleSound="toggleSound"
+    @turnOffSound="turnOffSound"
+  ></FirstSceneNext>
 </template>
 
 <script>
@@ -133,6 +132,7 @@ export default {
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
+  opacity: 1;
 }
 .first-text {
   display: inline-block;
@@ -153,13 +153,20 @@ export default {
   left: 0;
   right: 0;
   text-align: center;
-  bottom: 10%;
+  bottom: 20%;
   font-size: 17px;
+  animation: blinker 2s linear infinite;
 }
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
 .touch-screen {
   height: 100vh;
   background-color: white;
-  opacity: 30%;
+  opacity: 0%;
 }
 .texts {
   margin-top: 50px;
@@ -173,11 +180,22 @@ export default {
 .fade-enter-active {
   transition: all 1.5s ease;
 }
-.animate__animated.animate__flash {
-  --animate-duration: 3.5s;
-  --animate-repeat: 3;
+.first-enter-from {
+  opacity: 0;
 }
-.animate__animated.animate__fadeIn {
-  --animate-duration: 3s;
+.first-enter-to {
+  opacity: 1;
+}
+.first-enter-active {
+  transition: all 1s ease;
+}
+.first-leave-from {
+  opacity: 1;
+}
+.first-leave-to {
+  opacity: 0;
+}
+.first-leave-active {
+  transition: all 1s ease;
 }
 </style>

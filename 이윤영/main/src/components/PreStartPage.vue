@@ -1,11 +1,11 @@
 <template>
   <div class="prepage">
-    <button v-if="isPlaying" @click="toggleSound" class="sound-btn">
+    <!-- <button v-if="isPlaying" @click="toggleSound" class="sound-btn">
       <img class="icon-sound" src="../assets/images/volumeon.png" />
     </button>
     <button v-else @click="toggleSound" class="sound-btn">
       <img class="icon-sound" src="../assets/images/volumeoff.png" />
-    </button>
+    </button> -->
 
     <form method="post" class="name-form">
       <label class="name-label">시작하기 전, <br />이름을 입력해주세요:</label>
