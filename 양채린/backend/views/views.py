@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, url_for, g, flash, session, redirect
+from flask import Blueprint, render_template, request, url_for, g, flash, session, redirect, make_response
 import json
 from db_connect import db
 from werkzeug.utils import redirect
@@ -10,6 +10,12 @@ import uuid
 from models import User
 
 bp = Blueprint('views', __name__, url_prefix='/')
+
+'''
+session
+    userid
+    username
+'''
 
 @bp.before_app_request
 def load_sessioned_in_user():
@@ -42,6 +48,9 @@ def showMain():
 
         session['userid'] = user.id
 
+        print(session['userid'])
+        print(session['username'])
+
         return render_template('first.html')
 
 
@@ -55,8 +64,6 @@ def showFirst():
         filename = 'receivedimage.jpg'  # I assume you have a way of picking unique filenames
         with open(filename, 'wb') as f:
             f.write(imgdata)
-
-        print(type(str))
 
         picture = convertToBinaryData(filename)      
 
@@ -72,7 +79,7 @@ def showFirst():
         # predition = model.predict_food_transfer(model_transfer, test_transform, class_names, 'static/images/result.jpg')
 
         # 모델 넣을 자리
-        resultText = ''
+        resultText = 'great!'
 
         # modify
         user = User.query.get_or_404(session['id'])
@@ -98,7 +105,7 @@ def showSecond():
         picture = convertToBinaryData(filename)
 
         # 모델 넣을 자리
-        resultText = ''
+        resultText = 'great!'
 
         # modify
         g.user.drawing2 = picture
@@ -110,10 +117,18 @@ def showSecond():
 
 @bp.route('/third/', methods=['POST', 'GET'])
 def showThird():
-    if request.method == 'POST':
+    if request.method == 'GET':
         # response로 .. ?
+        '''
+        (make_response 함수 사용법)
+        resp = make_response(render_template('error.html'), 404)
+        resp.headers['X-Something'] = 'A value'
+        return resp
+        '''
+        '''
+        <version 1>
         response = {
-            "username": session['username'],
+            "username": g.user.username,
             "image1": g.user.image1,
             "image2": g.user.image2,
             "result1": g.user.result1,
@@ -122,9 +137,14 @@ def showThird():
 
         responseJson = json.dumps(response)
         # print(responseJson)
-
-        session.clear()        
+        session.clear()       
+        
         return render_template('forth.html', var=responseJson)
+
+        '''
+        response = make_response(render_template('forth.html'))
+        response.body
+
         # 혹은 response에 담아서 보내는 방식도 있음.
 
         # redirect(location, statuscode, response)
