@@ -23,15 +23,32 @@ function stopPainting(){
     painting = false;
 }
 //모바일 PC를 구별하기
-let isMobile = false;
+let device = "";
 function checkMobile(){
-    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
-        isMobile = true;
-    }else{
-        isMobile = false;
+    var mobileFlag = /Mobile|iP(hone|od)|Windows (CE|Phone)|Minimo|Opera M(obi|ini)|BlackBerry|Nokia/;
+        //모바일일경우
+      if (navigator.userAgent.match(/Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune|Lumia/)) {
+        device = "mobile";
+    }
+        //테블릿일 경우
+
+    else if ((/iPad|tablet|Tablet|Kindle|Tab|Galaxy Tab/).test(navigator.userAgent)) {
+        device = "tablet";
+    }
+        //그 외의 경우 모두 pc로 취급
+    else {
+        device = "etc";
+
     }
 };
+    // if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+    //     isMobile = true;
+    // }else{
+    //     isMobile = false;
+    // }
+
 checkMobile();
+console.log(device);
 if(isMobile){
     // 모바일 버전
     canvas.addEventListener("touchmove", touchMove, false);

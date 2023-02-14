@@ -1,29 +1,28 @@
 <!DOCTYPE html>
-<html>
-
-<style>
-  html{cursor: url(draw_icon1_24.png) 0 32, auto}
-</style>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
 <body>
-  <h1>아래 버튼을 클릭해주세요</h1>
+  <script>
+    let device = "";
+    function checkMobile(){
 
-  <button id="test1">button</button>
-  <button id="test2">button2</button>
+            //모바일일경우
+            if  ((/iP(hone|od)|Android.*Mobile|BlackBerry|IEMobile|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune|Lumia/g).test(navigator.userAgent)){
+              device = "mobile";
+            }
+            //테블릿일 경우
+          else{
+              device = "tablet";
+            }
 
-
-</body>
-
-</html>
-<script>
-    document.getElementById("test1").onclick = function () {
-      alert("Hello World");
     };
-    document.getElementById("test2").onclick = function () {
-      alert("Hello it is test!");
-    };
-
-
-
-
-
+    checkMobile();
+    console.log(device);
   </script>
+</body>
+</html>
