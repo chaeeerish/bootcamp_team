@@ -1,6 +1,12 @@
 <template>
-  <transition>
+  <transition name="first">
     <div v-if="showSecondScene" class="second-scene">
+      <button v-if="isPlaying" @click="toggleSound" class="sound-btn">
+        <img class="icon-sound" src="../assets/images/volumeon.png" />
+      </button>
+      <button v-else @click="toggleSound" class="sound-btn">
+        <img class="icon-sound" src="../assets/images/volumeoff.png" />
+      </button>
       <div class="first-text">
         <transition name="fade">
           <p class="texts" v-if="timedTrigger.Trigger1">
@@ -14,7 +20,7 @@
         </transition>
         <transition name="fade">
           <p class="texts" v-if="timedTrigger.Trigger3">
-            창문 밖에는 귀뚜라미 소리가 들립니다.
+            창문 밖에는 귀뚜라미 <br />소리가 들립니다.
           </p>
         </transition>
       </div>
@@ -28,9 +34,13 @@
       ></div>
     </div>
   </transition>
-  <transition>
-    <SecondSceneNext v-if="secondNext"></SecondSceneNext>
-  </transition>
+
+  <SecondSceneNext
+    v-if="secondNext"
+    v-bind:isPlaying="isPlaying"
+    @toggleSound="toggleSound"
+    @turnOffSound="turnOffSound"
+  ></SecondSceneNext>
 </template>
 
 <script>
@@ -60,13 +70,45 @@ export default {
     }, 7000);
     return { timedTrigger };
   },
+  created() {
+    this.current = this.sounds[this.index];
+    this.player.src = this.current.src;
+    this.player.loop = true;
+    setTimeout(() => {
+      this.player.play();
+    }, 2000); //2초 후에 오디오 실행
+  },
   data() {
-    return { secondNext: false, showSecondScene: true };
+    return {
+      secondNext: false,
+      showSecondScene: true,
+      isPlaying: true,
+      current: {},
+      index: 0,
+      sounds: [
+        {
+          title: "MainSound",
+          src: require("../assets/audio/night.mp3"),
+        },
+      ],
+      player: new Audio(),
+    };
   },
   methods: {
+    toggleSound() {
+      this.isPlaying = !this.isPlaying;
+      if (this.isPlaying === !true) {
+        this.player.pause();
+      } else if (this.isPlaying === true) {
+        this.player.play();
+      }
+    }, //음소거
     moveToSecondNext() {
       this.showSecondScene = !this.showSecondScene;
       this.secondNext = !this.secondNext;
+    },
+    turnOffSound() {
+      this.player.pause();
     },
   },
 };
@@ -76,8 +118,8 @@ export default {
 .second-scene {
   height: calc(var(--vh, 1vh) * 100);
   width: 100%;
-  background-image: url("../assets/images/window.png");
-  color: #000;
+  background-image: url("../assets/images/night2.jpg");
+  color: #ffffff;
   font-size: 18.5px;
   font-family: korFont2;
   position: relative;
@@ -114,11 +156,23 @@ export default {
 .fade-enter-active {
   transition: all 1.5s ease;
 }
-.animate__animated.animate__flash {
-  --animate-duration: 3.5s;
-  --animate-repeat: 3;
+
+.first-enter-from {
+  opacity: 0;
 }
-.animate__animated.animate__fadeIn {
-  --animate-duration: 3s;
+.first-enter-to {
+  opacity: 1;
+}
+.first-enter-active {
+  transition: all 1s ease;
+}
+.first-leave-from {
+  opacity: 1;
+}
+.first-leave-to {
+  opacity: 0;
+}
+.first-leave-active {
+  transition: all 1s ease;
 }
 </style>

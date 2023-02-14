@@ -1,6 +1,12 @@
 <template>
-  <transition>
+  <transition name="first">
     <div v-if="showFirstScene" class="first-scene">
+      <button v-if="isPlaying" @click="toggleSound" class="sound-btn">
+        <img class="icon-sound" src="../assets/images/volumeon.png" />
+      </button>
+      <button v-else @click="toggleSound" class="sound-btn">
+        <img class="icon-sound" src="../assets/images/volumeoff.png" />
+      </button>
       <div class="first-text">
         <transition name="fade">
           <p class="texts" v-if="timedTrigger.Trigger1">
@@ -29,9 +35,13 @@
       ></div>
     </div>
   </transition>
-  <transition>
-    <FirstSceneNext v-if="firstNext"></FirstSceneNext>
-  </transition>
+
+  <FirstSceneNext
+    v-if="firstNext"
+    v-bind:isPlaying="isPlaying"
+    @toggleSound="toggleSound"
+    @turnOffSound="turnOffSound"
+  ></FirstSceneNext>
 </template>
 
 <script>
@@ -61,13 +71,45 @@ export default {
     }, 7000);
     return { timedTrigger };
   },
+  created() {
+    this.current = this.sounds[this.index];
+    this.player.src = this.current.src;
+    this.player.loop = true;
+    setTimeout(() => {
+      this.player.play();
+    }, 1000); //1초 후에 오디오 실행
+  },
   data() {
-    return { firstNext: false, showFirstScene: true };
+    return {
+      isPlaying: true,
+      firstNext: false,
+      showFirstScene: true,
+      current: {},
+      index: 0,
+      sounds: [
+        {
+          title: "MainSound",
+          src: require("../assets/audio/fireplace.mp3"),
+        },
+      ],
+      player: new Audio(),
+    };
   },
   methods: {
+    toggleSound() {
+      this.isPlaying = !this.isPlaying;
+      if (this.isPlaying === !true) {
+        this.player.pause();
+      } else if (this.isPlaying === true) {
+        this.player.play();
+      }
+    }, //음소거
     moveToFirstNext() {
       this.showFirstScene = !this.showFirstScene;
       this.firstNext = !this.firstNext;
+    },
+    turnOffSound() {
+      this.player.pause();
     },
   },
 };
@@ -90,6 +132,7 @@ export default {
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
+  opacity: 1;
 }
 .first-text {
   display: inline-block;
@@ -110,13 +153,20 @@ export default {
   left: 0;
   right: 0;
   text-align: center;
-  bottom: 10%;
+  bottom: 20%;
   font-size: 17px;
+  animation: blinker 2s linear infinite;
 }
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
 .touch-screen {
   height: 100vh;
   background-color: white;
-  opacity: 30%;
+  opacity: 0%;
 }
 .texts {
   margin-top: 50px;
@@ -130,11 +180,22 @@ export default {
 .fade-enter-active {
   transition: all 1.5s ease;
 }
-.animate__animated.animate__flash {
-  --animate-duration: 3.5s;
-  --animate-repeat: 3;
+.first-enter-from {
+  opacity: 0;
 }
-.animate__animated.animate__fadeIn {
-  --animate-duration: 3s;
+.first-enter-to {
+  opacity: 1;
+}
+.first-enter-active {
+  transition: all 1s ease;
+}
+.first-leave-from {
+  opacity: 1;
+}
+.first-leave-to {
+  opacity: 0;
+}
+.first-leave-active {
+  transition: all 1s ease;
 }
 </style>

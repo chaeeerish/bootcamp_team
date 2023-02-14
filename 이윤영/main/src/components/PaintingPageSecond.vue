@@ -1,104 +1,116 @@
 <template>
-  <div class="painting-page">
-    <div class="painting-content">
-      <div id="canvas_Wrapper">
-        <canvas
-          ref="jsCanvas"
-          width="700"
-          height="700"
-          id="jsCanvas"
-          class="canvas"
-        ></canvas>
-      </div>
-      <div class="controls">
-        <div class="controls-container">
-          <div class="controls__range">
-            <input
-              type="range"
-              id="jsRange"
-              min="0.1"
-              max="5"
-              step="0.1"
-              v-model="size"
-            />
-          </div>
-          <div class="controls__btns">
-            <button
-              type="button"
-              class="reset-btn"
-              id="jsReset"
-              @click="resetCanvas"
-            >
-              <font-awesome-icon
-                class="reset-icon"
-                icon="fa-solid fa-rotate-right"
+  <transition name="first">
+    <div class="painting-page">
+      <div class="painting-content">
+        <div id="canvas_Wrapper">
+          <canvas
+            ref="jsCanvas"
+            width="700"
+            height="700"
+            id="jsCanvas"
+            class="canvas"
+          ></canvas>
+        </div>
+        <div class="controls">
+          <div class="controls-container">
+            <div class="controls__range">
+              <input
+                type="range"
+                id="jsRange"
+                min="0.1"
+                max="5"
+                step="0.1"
+                v-model="size"
               />
+            </div>
+            <div class="controls__btns">
+              <button
+                type="button"
+                class="reset-btn"
+                id="jsReset"
+                @click="resetCanvas"
+              >
+                <font-awesome-icon
+                  class="reset-icon"
+                  icon="fa-solid fa-rotate-right"
+                />
+              </button>
+            </div>
+            <button
+              v-if="isPlaying"
+              @click="$emit('toggleSound1')"
+              class="sound-btn1"
+            >
+              <img class="icon-sound1" src="../assets/images/volumeon.png" />
+            </button>
+            <button v-else @click="$emit('toggleSound1')" class="sound-btn1">
+              <img class="icon-sound1" src="../assets/images/volumeoff.png" />
             </button>
           </div>
-        </div>
-        <div class="controls__colors" id="jsColors" ref="jsColors">
-          <div
-            class="controls__color jsColor"
-            @click="handleColorClick"
-            style="background-color: #2c2c2c"
-          ></div>
-          <div
-            class="controls__color jsColor"
-            @click="handleColorClick"
-            style="background-color: white"
-          ></div>
-          <div
-            class="controls__color jsColor"
-            @click="handleColorClick"
-            style="background-color: #ff3b30"
-          ></div>
-          <div
-            class="controls__color jsColor"
-            @click="handleColorClick"
-            style="background-color: #ff9500"
-          ></div>
-          <div
-            class="controls__color jsColor"
-            @click="handleColorClick"
-            style="background-color: #ffcc00"
-          ></div>
-          <div
-            class="controls__color jsColor"
-            @click="handleColorClick"
-            style="background-color: #4cd963"
-          ></div>
-          <div
-            class="controls__color jsColor"
-            @click="handleColorClick"
-            style="background-color: #5ac8fa"
-          ></div>
-          <div
-            class="controls__color jsColor"
-            @click="handleColorClick"
-            style="background-color: #0579ff"
-          ></div>
-          <div
-            class="controls__color jsColor"
-            @click="handleColorClick"
-            style="background-color: #5856d6"
-          ></div>
-          <div
-            class="controls__color jsColor"
-            @click="handleColorClick"
-            style="background-color: #884d1d"
-          ></div>
+          <div class="controls__colors" id="jsColors" ref="jsColors">
+            <div
+              class="controls__color jsColor"
+              @click="handleColorClick"
+              style="background-color: #2c2c2c"
+            ></div>
+            <div
+              class="controls__color jsColor"
+              @click="handleColorClick"
+              style="background-color: white"
+            ></div>
+            <div
+              class="controls__color jsColor"
+              @click="handleColorClick"
+              style="background-color: #ff3b30"
+            ></div>
+            <div
+              class="controls__color jsColor"
+              @click="handleColorClick"
+              style="background-color: #ff9500"
+            ></div>
+            <div
+              class="controls__color jsColor"
+              @click="handleColorClick"
+              style="background-color: #ffcc00"
+            ></div>
+            <div
+              class="controls__color jsColor"
+              @click="handleColorClick"
+              style="background-color: #4cd963"
+            ></div>
+            <div
+              class="controls__color jsColor"
+              @click="handleColorClick"
+              style="background-color: #5ac8fa"
+            ></div>
+            <div
+              class="controls__color jsColor"
+              @click="handleColorClick"
+              style="background-color: #0579ff"
+            ></div>
+            <div
+              class="controls__color jsColor"
+              @click="handleColorClick"
+              style="background-color: #5856d6"
+            ></div>
+            <div
+              class="controls__color jsColor"
+              @click="handleColorClick"
+              style="background-color: #884d1d"
+            ></div>
+          </div>
         </div>
       </div>
+      <button type="button-next" @click="toggleModal" class="button-next">
+        NEXT
+      </button>
     </div>
-    <button type="button-next" @click="toggleModal" class="button-next">
-      NEXT
-    </button>
-  </div>
+  </transition>
   <transition name="zoom">
     <div v-show="showModal" class="overlay">
       <div v-show="showModal" class="modal-container">
         <div class="modal-content">
-          <p>그림을 이대로 제출하시겠습니까?</p>
+          <p>그림을 이대로 <br />제출하시겠습니까?</p>
         </div>
         <div class="modal-btn-grid">
           <button @click="toggleModal" class="modal-btn left">취소</button>
@@ -113,6 +125,7 @@
 export default {
   name: "PaintingPageSecond",
   components: {},
+  props: ["isPlaying"],
   data() {
     return {
       ctx: null,
@@ -161,6 +174,7 @@ export default {
       this.showModal = !this.showModal;
     }, //확인 모달 창
     onClickSecond() {
+      this.$emit("turnOffSound");
       this.$router.push({ name: "result" });
     }, //클릭시 다음 페이지로 넘어가는 버튼
     onMouseMove(event) {
@@ -416,7 +430,19 @@ body {
   border-radius: 15px;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
 }
-
+.sound-btn1 {
+  color: #ffffff;
+  border: none;
+  padding: 0;
+  display: inline-block;
+  background: none;
+  margin-top: -10px;
+  padding-left: 5px;
+}
+.icon-sound1 {
+  height: 40px;
+  color: #fff;
+}
 .controls {
   margin-top: 80px;
   display: flex;
@@ -526,7 +552,7 @@ html {
 .modal-container {
   display: inline-block;
   position: fixed;
-  width: 310px;
+  width: 250px;
   background-color: #fff;
   border-radius: 10px;
   text-align: center;
@@ -537,12 +563,18 @@ html {
   right: 0;
   margin-left: auto;
   margin-right: auto;
+  -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
 }
 .modal-container p {
   margin: 30px;
 }
 .modal-content {
   border-bottom: 1px solid #d0d0d0;
+  line-height: 1.5;
 }
 .modal-btn-grid {
   display: grid;

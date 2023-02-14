@@ -5,8 +5,8 @@ create table user (
     username varchar(50) not null,
     image1 LONGBLOB,
     image2 LONGBLOB,
-    result1 LONGBLOB,
-    result2 LONGBLOB
+    result1 TEXT,
+    result2 TEXT
 )
 
 select * from user;

@@ -2,10 +2,13 @@
   <router-view v-slot="{ Component }">
     <transition
       :key="$route.fullPath"
-      name="route1"
+      name="route"
       mode="out-in"
-      :enter-active-class="'route1-enter-active'"
-      :leave-active-class="'route1-leave-active'"
+      :enter-active-class="'route-enter-active'"
+      :leave-active-class="'route-leave-active'"
+      :enter-from-class="'route-enter-from'"
+      :leave-to-class="'route-leave-to'"
+      appear
     >
       <component :is="Component"></component>
     </transition>
@@ -201,20 +204,15 @@ html {
   src: url(./assets/fonts/micegothic.ttf);
 }
 
-/* route transition 
-.route1-enter-from {
+.route-enter-from {
   opacity: 0;
-  transform: translateX(100px);
 }
-.route1-enter-active {
-  transition: all 3s ease-out;
+
+.route-enter-active,
+.route-leave-active {
+  transition: all 0.5s ease-out;
 }
-.route1-leave-to {
+.route-leave-to {
   opacity: 0;
-  transform: translateX(-100px);
 }
-.route1-leave-active {
-  transition: all 3s ease-in;
-}
-*/
 </style>

@@ -9,7 +9,8 @@
     </div>
     <button type="button" @click="toggleMain" class="start-btn">START</button>
   </div>
-  <transition enter-active-class="animate__animated animate__fadeInUp">
+
+  <transition name="main">
     <PreStartPage v-if="showPre"></PreStartPage>
   </transition>
 </template>
@@ -20,10 +21,27 @@ export default {
   name: "MainPage",
   components: { PreStartPage },
   data() {
-    return { showMain: true, showPre: false };
+    return {
+      current: {},
+      index: 0,
+      showMain: true,
+      showPre: false,
+      sounds: [
+        {
+          title: "MainSound",
+          src: require("../assets/audio/start.mp3"),
+        },
+      ],
+      player: new Audio(),
+    };
+  },
+  created() {
+    this.current = this.sounds[this.index];
+    this.player.src = this.current.src;
   },
   methods: {
     toggleMain() {
+      this.player.play();
       this.showMain = !this.showMain;
       this.showPre = !this.showPre;
     },
@@ -43,8 +61,14 @@ export default {
 .main {
   background-image: url("../assets/images/example.jpg");
   height: calc(var(--vh, 1vh) * 100);
-  color: #1e1e1e;
+  color: #3c3c3c;
   overflow: hidden;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
 }
 .title {
   text-align: left;
@@ -53,6 +77,14 @@ export default {
   font-size: 30px;
   font-family: korFontRegular;
   margin-top: 50px;
+  font-weight: 1000;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+  top: 15%;
 }
 .title :nth-child(2) {
   font-size: 20px;
@@ -74,5 +106,19 @@ export default {
   padding: 0;
   cursor: pointer;
   outline: inherit;
+}
+.main-enter-from {
+  opacity: 0;
+  transform: translateY(500px);
+}
+.main-enter-active {
+  transition: all 1s ease-out;
+}
+.main-leave-to {
+  opacity: 0;
+  transform: translateY(-500px);
+}
+.main-leave-active {
+  transition: all 1s ease-in;
 }
 </style>
