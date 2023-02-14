@@ -192,6 +192,20 @@ export default {
     }, //확인 모달 창
     onClickSecond() {
       this.$emit("turnOffSound");
+
+      var canvasContents = this.$refs.jsCanvas.toDataURL();
+      var file = JSON.stringify({'Image1':canvasContents});
+      fetch('http://localhost:3000/file',{
+      method: 'POST',
+      headers: {
+          "Content-Type": "application/json",
+      },
+      body: file
+      })
+          .then((response) => response.json())
+          .then((data) => console.log(data))
+
+
       this.$router.push({ name: "result" });
     }, //클릭시 다음 페이지로 넘어가는 버튼
     onMouseMove(event) {

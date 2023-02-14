@@ -31,6 +31,18 @@ export default {
         if (this.isPlaying === true) {
           this.player.play();
           console.log(name);
+
+          var file = JSON.stringify({'userName':name});
+
+          fetch('http://localhost:3000/file',{
+          method: 'POST',
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: file
+        })
+            .then((response) => response.json())
+            .then((data) => console.log(data))
           this.$router.push({ name: "first" });
         } else {
           console.log(name);
