@@ -1,5 +1,6 @@
 <template>
-  <router-view v-slot="{ Component }">
+  <desktop-scene v-if="desktop"></desktop-scene>
+  <router-view v-if="mobile" v-slot="{ Component }">
     <transition
       :key="$route.fullPath"
       name="route"
@@ -16,11 +17,12 @@
 </template>
 
 <script>
+import DesktopScene from "./components/DesktopScene.vue"
 export default {
   name: "App",
-  components: {},
+  components: {DesktopScene},
   data() {
-    return {};
+    return {mobile:true, desktop: false};
   },
   methods: {
     leave(event) {
