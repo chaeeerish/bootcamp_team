@@ -5,8 +5,6 @@
         <div id="canvas_Wrapper">
           <canvas
             ref="jsCanvas"
-            width="700"
-            height="700"
             id="jsCanvas"
             class="canvas"
           ></canvas>
@@ -134,35 +132,43 @@ export default {
     return {
       ctx: null,
       painting: false,
-      isMobile: false,
       size: 2.5,
       color: "#2c2c2c",
       showModal: false,
+      device: null
     };
   },
   setup() {},
   created() {
-    // for(var i=0; i<colors.length; i++){
-    //     console.log("1");
-    //     colors[i].addEventListener("click",this.handleColorClick)
-    // }
+
   },
   mounted() {
     this.checkMobile();
-    this.ctx = this.$refs.jsCanvas.getContext("2d");
-    this.ctx.fillStyle = "white";
-    this.ctx.fillRect(0, 0, 700, 700);
+    // this.ctx = this.$refs.jsCanvas.getContext("2d");
+    // this.ctx.fillStyle = "white";
+    // this.ctx.fillRect(0, 0, 700, 700);
 
-    this.ctx.strokeStyle = "#2c2c2c";
-    this.ctx.fillStyle = "#2c2c2c";
-    this.ctx.lineWidth = 2.5;
+    // this.ctx.strokeStyle = "#2c2c2c";
+    // this.ctx.fillStyle = "#2c2c2c";
+    // this.ctx.lineWidth = 2.5;
 
-    this.$refs.jsCanvas.addEventListener("mousemove", this.onMouseMove);
-    this.$refs.jsCanvas.addEventListener("mousedown", this.onMouseDown);
-    this.$refs.jsCanvas.addEventListener("mouseup", this.onMouseUp);
+    // this.$refs.jsCanvas.addEventListener("mousemove", this.onMouseMove);
+    // this.$refs.jsCanvas.addEventListener("mousedown", this.onMouseDown);
+    // this.$refs.jsCanvas.addEventListener("mouseup", this.onMouseUp);
 
-    if (this.isMobile) {
+    if (this.device === "mobile") {
       // 모바일 버전
+      this.$refs.jsCanvas.width=310;
+      this.$refs.jsCanvas.height=465.3;
+
+      this.ctx = this.$refs.jsCanvas.getContext('2d');
+      this.ctx.fillStyle = "white";
+      this.ctx.fillRect(0, 0, 700, 700);
+
+      this.ctx.strokeStyle = "#2c2c2c";
+      this.ctx.fillStyle = "#2c2c2c";
+      this.ctx.lineWidth = 2.5;
+
       this.$refs.jsCanvas.addEventListener("touchmove", this.touchMove, false);
       this.$refs.jsCanvas.addEventListener(
         "touchstart",
@@ -170,6 +176,28 @@ export default {
         false
       );
       this.$refs.jsCanvas.addEventListener("touchend", this.touchEnd, false);
+    }else{
+      this.$refs.jsCanvas.width=700;
+      this.$refs.jsCanvas.height=700;
+
+      this.ctx = this.$refs.jsCanvas.getContext('2d');
+      this.ctx.fillStyle = "white";
+      this.ctx.fillRect(0, 0, 700, 700);
+
+      this.ctx.strokeStyle = "#2c2c2c";
+      this.ctx.fillStyle = "#2c2c2c";
+      this.ctx.lineWidth = 2.5;
+
+      this.$refs.jsCanvas.addEventListener("mousemove", this.onMouseMove);
+      this.$refs.jsCanvas.addEventListener("mousedown", this.onMouseDown);
+      this.$refs.jsCanvas.addEventListener("mouseup", this.onMouseUp);
+
+      //아이패드는 크기는 크지만 모바일취급이 되어서, PC로 분류 하게끔 그냥 바꿨습니다.
+      this.$refs.jsCanvas.addEventListener("touchmove", this.touchMove, false);
+      this.$refs.jsCanvas.addEventListener("touchstart", this.touchStart, false);
+      this.$refs.jsCanvas.addEventListener("touchend", this.touchEnd, false);
+
+
     }
   },
   unmounted() {},
@@ -203,15 +231,14 @@ export default {
       this.painting = false;
     },
     checkMobile() {
-      if (
-        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-          navigator.userAgent
-        )
-      ) {
-        this.isMobile = true;
-      } else {
-        this.isMobile = false;
+
+      if
+      ((/iP(hone|od)|Android.*Mobile|BlackBerry|IEMobile|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune|Lumia/g).test(navigator.userAgent)) {    this.device = "mobile";
       }
+      else {
+        this.device = "etc";
+      }
+
     },
     resetCanvas() {
       this.ctx = this.$refs.jsCanvas.getContext("2d");
@@ -221,12 +248,12 @@ export default {
     },
     getTouchPos(e) {
       return {
-        x: (e.targetTouches[0].clientX - e.target.offsetLeft) * 2.258,
+        x: (e.targetTouches[0].clientX - e.target.offsetLeft),
         y:
           (e.targetTouches[0].clientY -
             e.target.offsetTop +
-            document.documentElement.scrollTop) *
-          1.5053,
+            document.documentElement.scrollTop)
+          ,
       };
     },
     touchStart(e) {
