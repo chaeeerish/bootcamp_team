@@ -104,8 +104,8 @@ export default {
       }
     }, //음소거
     moveToSecondNext() {
-      this.showSecondScene = !this.showSecondScene;
-      this.secondNext = !this.secondNext;
+      this.showSecondScene = false;
+      this.secondNext = true;
     },
     turnOffSound() {
       this.player.pause();

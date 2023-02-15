@@ -105,8 +105,10 @@ export default {
       }
     }, //음소거
     moveToFirstNext() {
-      this.showFirstScene = !this.showFirstScene;
-      this.firstNext = !this.firstNext;
+      //showFirstsScene을 true에서 false로
+      //firstNext를 false에서 true로 바꿔줌
+      this.showFirstScene = false;
+      this.firstNext = true;
     },
     turnOffSound() {
       this.player.pause();

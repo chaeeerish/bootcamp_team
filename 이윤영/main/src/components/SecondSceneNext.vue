@@ -52,8 +52,8 @@ export default {
   props: ["isPlaying"],
   methods: {
     moveToSecondPaint() {
-      this.secondNext1 = !this.secondNext1;
-      this.secondPaint = !this.secondPaint;
+      this.secondNext1 = false;
+      this.secondPaint = true;
     },
     toggleSound() {
       this.$emit("toggleSound");
