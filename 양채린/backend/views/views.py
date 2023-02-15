@@ -3,6 +3,7 @@ import json
 from db_connect import db
 from werkzeug.utils import redirect
 import base64
+from flask_cors import CORS, cross_origin
 import sys
 import uuid
 # import tensorflow as tf
@@ -10,6 +11,7 @@ import uuid
 from models import User
 
 bp = Blueprint('views', __name__, url_prefix='/')
+CORS(bp)
 
 '''
 session
@@ -17,16 +19,17 @@ session
     username
 '''
 
-@bp.before_app_request
-def load_sessioned_in_user():
-    # userid = session.get('userid')
-    # test용
-    userid = '1'
-    
-    if userid is None:
-        g.user = None
-    else:
-        g.user = db.session.query(User).filter(User.userid == userid).first()
+# @bp.before_app_request
+# def load_sessioned_in_user():
+#     userid = session.get('userid')
+#     print("여기다~~~~")
+#     print(userid)
+#     # test용
+#     # userid = '1'
+#     if userid is None:
+#         g.user = None
+#     else:
+#         g.user = db.session.query(User).filter(User.userid == userid).first()
 
 
 def convertToBinaryData(filename):
@@ -37,10 +40,10 @@ def convertToBinaryData(filename):
 
 @bp.route('/main/', methods=['POST', 'GET'])
 def showMain():
-    session.clear()
-    if request.method == 'GET':
-        return render_template('main.html')
-    else: # POST
+    # session.clear()
+    # if request.method == 'GET':
+    #     return render_template('main.html')
+    if request.method == 'POST': # POST
         '''
         request
             username
@@ -49,7 +52,7 @@ def showMain():
         '''
         # 세션 구현 해야함
         params = request.get_json()
-        session['username'] = params['username']
+        # session['username'] = params['username']
         print(params['username'])
 
         # insert
@@ -57,22 +60,26 @@ def showMain():
         db.session.add(user)
         db.session.commit()
 
-        session['userid'] = user.userid
+        g.user = db.session.query(User).filter(User.userid == user.userid).first()
+        resp = make_response()
+        userid = g.user.userid
+        resp.set_cookie('userid', bytes(userid))
 
-        print(session['userid'])
-        print(session['username'])
+        # session['userid'] = user.userid
 
-        return render_template('first.html')
+        # print(session['userid'])
+        # print(session['username'])
 
-
+        return resp
+    
 @bp.route('/first/', methods=['POST', 'GET'])
 def showFirst():
-    if g.user == None:
-        return redirect(url_for('views.showMain'))
+    # if g.user == None:
+    #     return redirect(url_for('views.showMain'))
     if request.method == 'POST':
         params = request.get_json()
-        str = params['image']
-        print(params['image'])
+        str = params['image'][21:]
+        print(str)
 
         imgdata = base64.b64decode(str)
         filename = 'receivedimage.jpg'  # I assume you have a way of picking unique filenames
@@ -95,19 +102,34 @@ def showFirst():
         # 모델 넣을 자리
         resultText = 'great!'
 
+        userid = int.from_bytes(request.cookies.get('userid'), "big")
+        print("************************************")
+        print(userid)
+
+        g.user = db.session.query(User).filter(User.userid == userid).first()
         # modify
-        user = User.query.get_or_404(session['userid'])
-        user.image1 = picture
-        user.result1 = resultText
+
+        # user = db.session.query(User).filter(User.userid == userid).first()
+        # user = User.query.get_or_404(userid=session.get('userid'))
+        g.user.image1 = picture
+        g.user.result1 = resultText
         db.session.commit()
 
-        # 페이지 주기 => 페이지2
-        return render_template("second.html")
+
+        resp = make_response()
+        resp.set_cookie('userid', userid)
+
+        # session['userid'] = user.userid
+
+        # print(session['userid'])
+        # print(session['username'])
+
+        return resp
 
 @bp.route('/second/', methods=['POST', 'GET'])
 def showSecond():
-    if g.user == None:
-        return redirect(url_for('views.showMain'))
+    # if g.user == None:
+    #     return redirect(url_for('views.showMain'))
     if request.method == 'POST':
         
         params = request.get_json()
@@ -124,18 +146,26 @@ def showSecond():
         # 모델 넣을 자리
         resultText = 'great!'
 
+        userid = request.cookies.get('userid')
+        g.user = db.session.query(User).filter(User.userid == userid).first()
         # modify
+        print(userid)
+        # user = db.session.query(User).filter(User.userid == userid).first()
+        # user = User.query.get_or_404(userid=session.get('userid'))
         g.user.image2 = picture
         g.user.result2 = resultText
         db.session.commit()
         
-        return render_template('third.html')
+        resp = make_response("Cookie Setting Complete")
+        resp.set_cookie('userid', g.user.userid)
+
+        return resp
 
 
 @bp.route('/third/', methods=['POST', 'GET'])
 def showThird():
-    if g.user == None:
-        return redirect(url_for('views.showMain'))
+    # if g.user == None:
+    #     return redirect(url_for('views.showMain'))
     if request.method == 'GET':
         # response로 .. ?
         '''
@@ -144,6 +174,9 @@ def showThird():
         resp.headers['X-Something'] = 'A value'
         return resp
         '''
+
+        userid = request.cookies.get('userid')
+        g.user = db.session.query(User).filter(User.userid == userid).first()
 
         str_base641 = base64.b64encode(g.user.image1)
         base64_str1 = str_base641.decode('utf-8')
@@ -160,12 +193,12 @@ def showThird():
             "result2": g.user.result2
         }
         
-        print(type(g.user))
-        print(type(g.user.username))
-        print(type(base64_str1))
-        print(type(base64_str1))
-        print(type(g.user.result1))
-        print(type(g.user.result2))
+        # print(type(g.user))
+        # print(type(g.user.username))
+        # print(type(base64_str1))
+        # print(type(base64_str1))
+        # print(type(g.user.result1))
+        # print(type(g.user.result2))
 
         '''
         sitename_base64_str  = 'd2ViaXNmcmVl'
@@ -174,27 +207,27 @@ def showThird():
         '''    
 
         # version 1
-        # return jsonify({
-        #     "username": g.user.username,
-        #     "image1": base64_str1,
-        #     "image2": base64_str2,
-        #     "result1": g.user.result1,
-        #     "result2": g.user.result2
-        # }), 200
+        return jsonify({
+            "username": g.user.username,
+            "image1": base64_str1,
+            "image2": base64_str2,
+            "result1": g.user.result1,
+            "result2": g.user.result2
+        }), 200
 
         # version 2
         # return json.dumps(response)
 
         # version 3
-        return render_template("forth.html", username=g.user.username, image1=g.user.image1, image2=g.user.image2, result1=g.user.result1, result2=g.user.result2)
+        # return render_template("forth.html", username=g.user.username, image1=g.user.image1, image2=g.user.image2, result1=g.user.result1, result2=g.user.result2)
 
         # 혹은 response에 담아서 보내는 방식도 있음.
         # redirect(location, statuscode, response)
 
-@bp.route('/forth/', methods=['POST', 'GET'])
-def showForth():
-    if g.user == None:
-        return redirect(url_for('views.showMain'))
-    if request.method == 'GET':
-        session.clear()       
-        return render_template("forth.html")
+# @bp.route('/forth/', methods=['POST', 'GET'])
+# def showForth():
+#     if g.user == None:
+#         return redirect(url_for('views.showMain'))
+#     if request.method == 'GET':
+#         session.clear()       
+#         return render_template("forth.html")
