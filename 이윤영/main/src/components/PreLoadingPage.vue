@@ -1,17 +1,11 @@
 <template>
-  <div class="loading-page">
-    <h1>Loading-page</h1>
+  <div class="preloading-page">
+    <h1>Preloading-page</h1>
   </div>
 </template>
 
 <script>
-export default {
-  name: "LoadingPage",
-  data() {
-    return {};
-  },
-  methods: {},
-};
+export default {};
 </script>
 
 <style>

@@ -17,29 +17,41 @@
 </template>
 
 <script>
-import DesktopScene from "./components/DesktopScene.vue"
+import DesktopScene from "./components/DesktopScene.vue";
 export default {
   name: "App",
-  components: {DesktopScene},
+  components: { DesktopScene },
   data() {
-    return {mobile:true, desktop: false};
+    return { mobile: true, desktop: false };
   },
   methods: {
     leave(event) {
       event.preventDefault();
       event.returnValue = "";
     },
+    checkMobile() {
+      if (
+        /iP(hone|od)|Android.*Mobile|BlackBerry|IEMobile|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune|Lumia/g.test(
+          navigator.userAgent
+        )
+      ) {
+        this.device = "mobile";
+      } else {
+        this.device = "etc";
+      }
+      console.log(this.device);
+    },
   },
-
-  // created() {
-  //   this.$watch(
-  //     () => this.$route.params,
-  //     () => {
-  //       // WATCH FOR ROUTE CHANGES
-  //     }
-  //   );
-  // },
-
+  created() {
+    this.checkMobile();
+    if (this.device === "mobile") {
+      this.mobile = true;
+      this.desktop = false;
+    } else {
+      this.mobile = false;
+      this.desktop = true;
+    }
+  },
   mounted() {
     window.addEventListener("beforeunload", this.leave);
   },
