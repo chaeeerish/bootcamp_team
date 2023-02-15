@@ -1,6 +1,9 @@
 from flask import Flask
 from db_connect import db
-
+import logging
+ 
+logging.basicConfig(filename = "logs/project.log", level = logging.DEBUG)
+application=Flask(__name__)
 
 app = Flask(__name__)
 
