@@ -19,9 +19,9 @@ session
 
 @bp.before_app_request
 def load_sessioned_in_user():
-    userid = session.get('userid')
+    # userid = session.get('userid')
     # test용
-    # userid = '1'
+    userid = '1'
     
     if userid is None:
         g.user = None
@@ -50,6 +50,7 @@ def showMain():
         # 세션 구현 해야함
         params = request.get_json()
         session['username'] = params['username']
+        print(params['username'])
 
         # insert
         user = User(username=params['username'])
@@ -71,6 +72,7 @@ def showFirst():
     if request.method == 'POST':
         params = request.get_json()
         str = params['image']
+        print(params['image'])
 
         imgdata = base64.b64decode(str)
         filename = 'receivedimage.jpg'  # I assume you have a way of picking unique filenames
@@ -110,6 +112,7 @@ def showSecond():
         
         params = request.get_json()
         str = params['image']
+        print(params['image'])
 
         imgdata = base64.b64decode(str)
         filename = 'some_image.jpg'  # I assume you have a way of picking unique filenames
@@ -171,16 +174,19 @@ def showThird():
         '''    
 
         # version 1
-        return jsonify({
-            "username": g.user.username,
-            "image1": base64_str1,
-            "image2": base64_str2,
-            "result1": g.user.result1,
-            "result2": g.user.result2
-        }), 200
+        # return jsonify({
+        #     "username": g.user.username,
+        #     "image1": base64_str1,
+        #     "image2": base64_str2,
+        #     "result1": g.user.result1,
+        #     "result2": g.user.result2
+        # }), 200
 
         # version 2
         # return json.dumps(response)
+
+        # version 3
+        return render_template("forth.html", username=g.user.username, image1=g.user.image1, image2=g.user.image2, result1=g.user.result1, result2=g.user.result2)
 
         # 혹은 response에 담아서 보내는 방식도 있음.
         # redirect(location, statuscode, response)

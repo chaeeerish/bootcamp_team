@@ -1,1 +1,31 @@
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script>
+
+    // [요청 url 선언]
+    var reqURL = "http://localhost:5000/main/"; // 요청 주소
+
+    // [요청 json 데이터 선언]
+    var jsonData = { // Body에 첨부할 json 데이터
+                        "username" : "yang"}; 
+
+    $(document).ready(function(){
+        $('button').click(function(){   //submit 버튼을 클릭하였을 때
+            $.ajax({ 
+                url: reqURL, //주소
+    			data: JSON.stringify(jsonData), //전송 데이터
+    			type: "POST", //전송 타입
+    			async: true //비동기 여부
+                // dataType:'html',   // html 파일 형식으로 값을 담아온다.
+                // success : function(data){   //파일 주고받기가 성공했을 경우. data 변수 안에 값을 담아온다.
+                //      $('#message').html(data);  //현재 화면 위 id="message" 영역 안에 data안에 담긴 html 코드를 넣어준다. 
+                //  }
+            });
+        });
+    });
+    </script>
+    
+    
+
 <h2>main</h2>
+<button id="submit">클릭하세용_first로 넘어감</button>
