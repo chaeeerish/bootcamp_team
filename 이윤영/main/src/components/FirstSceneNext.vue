@@ -53,8 +53,8 @@ export default {
       this.$emit("toggleSound");
     },
     moveToFirstPaint() {
-      this.firstNext1 = !this.firstNext1;
-      this.firstPaint = !this.firstPaint;
+      this.firstNext1 = false;
+      this.firstPaint = true;
     },
     turnOffSound() {
       this.$emit("turnOffSound");
@@ -86,7 +86,7 @@ export default {
 <style>
 /*
 .first-scene-next {
-  
+
 }
 */
 .touch-screen-two {
