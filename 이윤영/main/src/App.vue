@@ -1,30 +1,42 @@
 <template>
   <desktop-scene v-if="desktop"></desktop-scene>
-  <router-view v-if="mobile" v-slot="{ Component }">
-    <transition
-      :key="$route.fullPath"
-      name="route"
-      mode="out-in"
-      :enter-active-class="'route-enter-active'"
-      :leave-active-class="'route-leave-active'"
-      :enter-from-class="'route-enter-from'"
-      :leave-to-class="'route-leave-to'"
-      appear
-    >
-      <component :is="Component"></component>
-    </transition>
-  </router-view>
+  <MainPage @ToFirstScene="ToFirstScene" v-if="mobile"></MainPage>
+  <FirstScene @ToSecondScene="ToSecondScene" v-if="showFirst"></FirstScene>
+  <SecondScene @ToResultPage="ToResultPage" v-if="showSecond"></SecondScene>
+  <ResultData v-if="showResult"></ResultData>
 </template>
 
 <script>
 import DesktopScene from "./components/DesktopScene.vue";
+import MainPage from "./views/Main/MainPage.vue";
+import FirstScene from "./views/First/FirstScene.vue";
+import SecondScene from "./views/Second/SecondScene.vue";
+import ResultData from "./views/Result/ResultData.vue";
 export default {
   name: "App",
-  components: { DesktopScene },
+  components: { DesktopScene, MainPage, FirstScene, SecondScene, ResultData },
   data() {
-    return { mobile: true, desktop: false };
+    return {
+      mobile: true,
+      desktop: false,
+      showFirst: false,
+      showSecond: false,
+      showResult: false,
+    };
   },
   methods: {
+    ToFirstScene() {
+      this.mobile = false;
+      this.showFirst = true;
+    },
+    ToSecondScene() {
+      this.showFirst = false;
+      this.showSecond = true;
+    },
+    ToResultPage() {
+      this.showSecond = false;
+      this.showResult = true;
+    },
     leave(event) {
       event.preventDefault();
       event.returnValue = "";

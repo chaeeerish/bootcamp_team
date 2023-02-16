@@ -1,29 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
-import MainPage from "../views/MainPage.vue";
-import FirstScene from "../views/FirstScene.vue";
-import SecondScene from "../views/SecondScene.vue";
-import ResultData from "../views/ResultData.vue";
-
+import MainPage from "../views/Main/MainPage.vue";
 const routes = [
   {
     path: "/",
     name: "main",
     component: MainPage,
-  },
-  {
-    path: "/first",
-    name: "first",
-    component: FirstScene,
-  },
-  {
-    path: "/second",
-    name: "second",
-    component: SecondScene,
-  },
-  {
-    path: "/result",
-    name: "result",
-    component: ResultData,
   },
 ];
 

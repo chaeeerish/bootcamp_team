@@ -32,21 +32,21 @@ export default {
           this.player.play();
           console.log(name);
 
-          var file = JSON.stringify({'userName':name});
+          var file = JSON.stringify({ userName: name });
 
-          fetch('http://localhost:3000/file',{
-          method: 'POST',
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: file
-        })
+          fetch("http://localhost:3000/file", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: file,
+          })
             .then((response) => response.json())
-            .then((data) => console.log(data))
-          this.$router.push({ name: "first" });
+            .then((data) => console.log(data));
+          this.$emit("ToFirstScene");
         } else {
           console.log(name);
-          this.$router.push({ name: "first" });
+          this.$emit("ToFirstScene");
         }
       } else {
         alert("이름을 입력해주세요");
@@ -65,7 +65,7 @@ export default {
       sounds: [
         {
           title: "MainSound",
-          src: require("../assets/audio/click.mp3"),
+          src: require("../../assets/audio/click.mp3"),
         },
       ],
       player: new Audio(),

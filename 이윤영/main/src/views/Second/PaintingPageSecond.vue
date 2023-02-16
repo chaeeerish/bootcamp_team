@@ -3,11 +3,7 @@
     <div class="painting-page">
       <div class="painting-content">
         <div id="canvas_Wrapper">
-          <canvas
-            ref="jsCanvas"
-            id="jsCanvas"
-            class="canvas"
-          ></canvas>
+          <canvas ref="jsCanvas" id="jsCanvas" class="canvas"></canvas>
         </div>
         <div class="controls">
           <div class="controls-container">
@@ -39,10 +35,13 @@
               @click="$emit('toggleSound1')"
               class="sound-btn1"
             >
-              <img class="icon-sound1" src="../assets/images/volumeon.png" />
+              <img class="icon-sound1" src="../../assets/images/volumeon.png" />
             </button>
             <button v-else @click="$emit('toggleSound1')" class="sound-btn1">
-              <img class="icon-sound1" src="../assets/images/volumeoff.png" />
+              <img
+                class="icon-sound1"
+                src="../../assets/images/volumeoff.png"
+              />
             </button>
           </div>
           <div class="controls__colors" id="jsColors" ref="jsColors">
@@ -135,18 +134,16 @@ export default {
     };
   },
   setup() {},
-  created() {
-
-  },
+  created() {},
   mounted() {
     this.checkMobile();
 
     if (this.device === "mobile") {
       // 모바일 버전
-      this.$refs.jsCanvas.width=310;
-      this.$refs.jsCanvas.height=465.3;
+      this.$refs.jsCanvas.width = 310;
+      this.$refs.jsCanvas.height = 465.3;
 
-      this.ctx = this.$refs.jsCanvas.getContext('2d');
+      this.ctx = this.$refs.jsCanvas.getContext("2d");
       this.ctx.fillStyle = "white";
       this.ctx.fillRect(0, 0, 700, 700);
 
@@ -161,11 +158,11 @@ export default {
         false
       );
       this.$refs.jsCanvas.addEventListener("touchend", this.touchEnd, false);
-    }else{
-      this.$refs.jsCanvas.width=700;
-      this.$refs.jsCanvas.height=700;
+    } else {
+      this.$refs.jsCanvas.width = 700;
+      this.$refs.jsCanvas.height = 700;
 
-      this.ctx = this.$refs.jsCanvas.getContext('2d');
+      this.ctx = this.$refs.jsCanvas.getContext("2d");
       this.ctx.fillStyle = "white";
       this.ctx.fillRect(0, 0, 700, 700);
 
@@ -179,10 +176,12 @@ export default {
 
       //아이패드는 크기는 크지만 모바일취급이 되어서, PC로 분류 하게끔 그냥 바꿨습니다.
       this.$refs.jsCanvas.addEventListener("touchmove", this.touchMove, false);
-      this.$refs.jsCanvas.addEventListener("touchstart", this.touchStart, false);
+      this.$refs.jsCanvas.addEventListener(
+        "touchstart",
+        this.touchStart,
+        false
+      );
       this.$refs.jsCanvas.addEventListener("touchend", this.touchEnd, false);
-
-
     }
   },
   unmounted() {},
@@ -194,19 +193,18 @@ export default {
       this.$emit("turnOffSound");
 
       var canvasContents = this.$refs.jsCanvas.toDataURL();
-      var file = JSON.stringify({'Image1':canvasContents});
-      fetch('http://localhost:3000/file',{
-      method: 'POST',
-      headers: {
+      var file = JSON.stringify({ Image1: canvasContents });
+      fetch("http://localhost:3000/file", {
+        method: "POST",
+        headers: {
           "Content-Type": "application/json",
-      },
-      body: file
+        },
+        body: file,
       })
-          .then((response) => response.json())
-          .then((data) => console.log(data))
+        .then((response) => response.json())
+        .then((data) => console.log(data));
 
-
-      this.$router.push({ name: "result" });
+      this.$emit("ToResultPage");
     }, //클릭시 다음 페이지로 넘어가는 버튼
     onMouseMove(event) {
       const x = event.offsetX;
@@ -230,10 +228,10 @@ export default {
       this.painting = false;
     },
     checkMobile() {
-      if ((/iP(hone|od)|Android.*Mobile|BlackBerry|IEMobile|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune|Lumia/g).test(
-
-navigator.userAgent
-)
+      if (
+        /iP(hone|od)|Android.*Mobile|BlackBerry|IEMobile|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune|Lumia/g.test(
+          navigator.userAgent
+        )
       ) {
         this.device = "mobile";
       } else {
@@ -249,11 +247,11 @@ navigator.userAgent
     },
     getTouchPos(e) {
       return {
-        x: (e.targetTouches[0].clientX - e.target.offsetLeft),
+        x: e.targetTouches[0].clientX - e.target.offsetLeft,
         y:
-          (e.targetTouches[0].clientY -
-            e.target.offsetTop +
-            document.documentElement.scrollTop),
+          e.targetTouches[0].clientY -
+          e.target.offsetTop +
+          document.documentElement.scrollTop,
       };
     },
     touchStart(e) {
@@ -515,7 +513,7 @@ body {
   margin-bottom: 30px;
 }
 html {
-  cursor: url("../assets/images/cursor.png") 0 32, auto;
+  cursor: url("../../assets/images/cursor.png") 0 32, auto;
 }
 .button-next {
   font-family: korFont2;

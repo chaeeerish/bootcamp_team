@@ -2,10 +2,10 @@
   <transition name="first">
     <div v-if="showSecondScene" class="second-scene">
       <button v-if="isPlaying" @click="toggleSound" class="sound-btn">
-        <img class="icon-sound" src="../assets/images/volumeon.png" />
+        <img class="icon-sound" src="../../assets/images/volumeon.png" />
       </button>
       <button v-else @click="toggleSound" class="sound-btn">
-        <img class="icon-sound" src="../assets/images/volumeoff.png" />
+        <img class="icon-sound" src="../../assets/images/volumeoff.png" />
       </button>
       <div class="first-text">
         <transition name="fade">
@@ -40,12 +40,13 @@
     v-bind:isPlaying="isPlaying"
     @toggleSound="toggleSound"
     @turnOffSound="turnOffSound"
+    @ToResultPage="ToResultPage"
   ></SecondSceneNext>
 </template>
 
 <script>
 import { ref } from "vue";
-import SecondSceneNext from "../components/SecondSceneNext.vue";
+import SecondSceneNext from "./SecondSceneNext.vue";
 export default {
   name: "FirstScene",
   components: { SecondSceneNext },
@@ -88,13 +89,16 @@ export default {
       sounds: [
         {
           title: "MainSound",
-          src: require("../assets/audio/night.mp3"),
+          src: require("../../assets/audio/night.mp3"),
         },
       ],
       player: new Audio(),
     };
   },
   methods: {
+    ToResultPage() {
+      this.$emit("ToResultPage");
+    },
     toggleSound() {
       this.isPlaying = !this.isPlaying;
       if (this.isPlaying === !true) {
@@ -118,7 +122,7 @@ export default {
 .second-scene {
   height: calc(var(--vh, 1vh) * 100);
   width: 100%;
-  background-image: url("../assets/images/night2.jpg");
+  background-image: url("../../assets/images/night2.jpg");
   color: #ffffff;
   font-size: 18.5px;
   font-family: korFont2;

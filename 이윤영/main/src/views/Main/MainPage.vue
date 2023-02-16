@@ -7,7 +7,14 @@
         확인해보는 심리 테스트
       </p>
     </div>
-    <button type="button" @click="toggleMain" class="start-btn">START</button>
+    <button
+      type="button"
+      @click="toggleMain"
+      @ToFirstScene="$emit('ToFirstScene')"
+      class="start-btn"
+    >
+      START
+    </button>
   </div>
 
   <transition name="main">
@@ -16,7 +23,7 @@
 </template>
 
 <script>
-import PreStartPage from "../components/PreStartPage.vue";
+import PreStartPage from "./PreStartPage.vue";
 export default {
   name: "MainPage",
   components: { PreStartPage },
@@ -29,7 +36,7 @@ export default {
       sounds: [
         {
           title: "MainSound",
-          src: require("../assets/audio/start.mp3"),
+          src: require("../../assets/audio/start.mp3"),
         },
       ],
       player: new Audio(),
@@ -59,7 +66,7 @@ export default {
 
 <style>
 .main {
-  background-image: url("../assets/images/example.jpg");
+  background-image: url("../../assets/images/example.jpg");
   height: calc(var(--vh, 1vh) * 100);
   color: #3c3c3c;
   overflow: hidden;

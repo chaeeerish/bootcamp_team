@@ -2,10 +2,10 @@
   <transition name="first">
     <div v-if="firstNext1" class="first-scene">
       <button v-if="isPlaying" @click="$emit('toggleSound')" class="sound-btn">
-        <img class="icon-sound" src="../assets/images/volumeon.png" />
+        <img class="icon-sound" src="../../assets/images/volumeon.png" />
       </button>
       <button v-else @click="$emit('toggleSound')" class="sound-btn">
-        <img class="icon-sound" src="../assets/images/volumeoff.png" />
+        <img class="icon-sound" src="../../assets/images/volumeoff.png" />
       </button>
       <div class="first-text">
         <transition name="fade">
@@ -37,18 +37,22 @@
     v-bind:isPlaying="isPlaying"
     @toggleSound1="toggleSound"
     @turnOffSound="turnOffSound"
+    @ToSecondScene="ToSecondScene"
   ></PaintingPageFirst>
 </template>
 
 <script>
 import { ref } from "vue";
-import PaintingPageFirst from "../components/PaintingPageFirst.vue";
+import PaintingPageFirst from "./PaintingPageFirst.vue";
 
 export default {
   name: "FirstSceneNext",
   components: { PaintingPageFirst },
   props: ["isPlaying"],
   methods: {
+    ToSecondScene() {
+      this.$emit("ToSecondScene");
+    },
     toggleSound() {
       this.$emit("toggleSound");
     },
