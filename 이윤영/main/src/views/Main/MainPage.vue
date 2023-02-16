@@ -18,7 +18,7 @@
   </div>
 
   <transition name="main">
-    <PreStartPage v-if="showPre"></PreStartPage>
+    <PreStartPage @ToFirstScene="ToFirstScene" v-if="showPre"></PreStartPage>
   </transition>
 </template>
 
@@ -47,6 +47,9 @@ export default {
     this.player.src = this.current.src;
   },
   methods: {
+    ToFirstScene() {
+      this.$emit("ToFirstScene");
+    },
     toggleMain() {
       this.player.play();
       this.showMain = !this.showMain;
