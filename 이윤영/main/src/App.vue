@@ -31,7 +31,7 @@ export default {
     },
     checkMobile() {
       if (
-        /iP(hone|od)|Android.*Mobile|BlackBerry|IEMobile|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune|Lumia/g.test(
+        /iP(hone|od|ad)|Android|BlackBerry|IEMobile|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune|Lumia/g.test(
           navigator.userAgent
         )
       ) {
