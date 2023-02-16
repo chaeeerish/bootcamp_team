@@ -33,13 +33,17 @@ export default {
           console.log(name);
 
           var file = JSON.stringify({'userName':name});
+          this.$cookies.set("test", "testValue");
+          const cookie = this.$cookies.get("test");
 
-          fetch('http://localhost:3000/file',{
+          console.log("cookie: ",cookie); //testValue
+          fetch('http://127.0.0.1:5000/real_test',{
           method: 'POST',
           headers: {
             "Content-Type": "application/json",
+
           },
-          body: file
+          body: file,
         })
             .then((response) => response.json())
             .then((data) => console.log(data))
