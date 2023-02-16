@@ -18,7 +18,12 @@
   </div>
 
   <transition name="main">
-    <PreStartPage @ToFirstScene="ToFirstScene" v-if="showPre"></PreStartPage>
+    <PreStartPage
+      v-bind:isPlaying="isPlaying"
+      @ToFirstScene="ToFirstScene"
+      @toggleSound="toggleSound"
+      v-if="showPre"
+    ></PreStartPage>
   </transition>
 </template>
 
@@ -27,6 +32,7 @@ import PreStartPage from "./PreStartPage.vue";
 export default {
   name: "MainPage",
   components: { PreStartPage },
+  props: ["isPlaying"],
   data() {
     return {
       current: {},
@@ -54,6 +60,9 @@ export default {
       this.player.play();
       this.showMain = !this.showMain;
       this.showPre = !this.showPre;
+    },
+    toggleSound() {
+      this.$emit("toggleSound");
     },
   },
   setup() {

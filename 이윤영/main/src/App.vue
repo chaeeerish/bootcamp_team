@@ -1,9 +1,24 @@
 <template>
   <desktop-scene v-if="desktop"></desktop-scene>
-  <MainPage @ToFirstScene="ToFirstScene" v-if="mobile"></MainPage>
-  <FirstScene @ToSecondScene="ToSecondScene" v-if="showFirst"></FirstScene>
-  <SecondScene @ToResultPage="ToResultPage" v-if="showSecond"></SecondScene>
-  <ResultData v-if="showResult"></ResultData>
+  <MainPage
+    @ToFirstScene="ToFirstScene"
+    @toggleSound="toggleSound"
+    v-bind:isPlaying="isPlaying"
+    v-if="mobile"
+  ></MainPage>
+
+  <FirstScene
+    @ToSecondScene="ToSecondScene"
+    @toggleSound="toggleSound"
+    v-bind:isPlaying="isPlaying"
+    v-if="showFirst"
+  ></FirstScene>
+
+  <SecondScene
+    @toggleSound="toggleSound"
+    v-bind:isPlaying="isPlaying"
+    v-if="showSecond"
+  ></SecondScene>
 </template>
 
 <script>
@@ -11,17 +26,17 @@ import DesktopScene from "./components/DesktopScene.vue";
 import MainPage from "./views/Main/MainPage.vue";
 import FirstScene from "./views/First/FirstScene.vue";
 import SecondScene from "./views/Second/SecondScene.vue";
-import ResultData from "./views/Result/ResultData.vue";
+
 export default {
   name: "App",
-  components: { DesktopScene, MainPage, FirstScene, SecondScene, ResultData },
+  components: { DesktopScene, MainPage, FirstScene, SecondScene },
   data() {
     return {
       mobile: true,
       desktop: false,
       showFirst: false,
       showSecond: false,
-      showResult: false,
+      isPlaying: true,
     };
   },
   methods: {
@@ -33,10 +48,7 @@ export default {
       this.showFirst = false;
       this.showSecond = true;
     },
-    ToResultPage() {
-      this.showSecond = false;
-      this.showResult = true;
-    },
+
     leave(event) {
       event.preventDefault();
       event.returnValue = "";
@@ -52,6 +64,9 @@ export default {
         this.device = "etc";
       }
       console.log(this.device);
+    },
+    toggleSound() {
+      this.isPlaying = !this.isPlaying;
     },
   },
   created() {
@@ -230,15 +245,12 @@ html {
   src: url(./assets/fonts/micegothic.ttf);
 }
 
-.route-enter-from {
-  opacity: 0;
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.5s;
 }
-
-.route-enter-active,
-.route-leave-active {
-  transition: all 0.5s ease-out;
-}
-.route-leave-to {
+.page-enter,
+.page-leave-to {
   opacity: 0;
 }
 </style>

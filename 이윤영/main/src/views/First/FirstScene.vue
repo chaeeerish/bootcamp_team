@@ -35,7 +35,6 @@
       ></div>
     </div>
   </transition>
-
   <FirstSceneNext
     v-if="firstNext"
     v-bind:isPlaying="isPlaying"
@@ -51,6 +50,7 @@ import FirstSceneNext from "./FirstSceneNext.vue";
 export default {
   name: "FirstScene",
   components: { FirstSceneNext },
+  props: ["isPlaying"],
   setup() {
     const timedTrigger = ref({
       Trigger1: false,
@@ -76,13 +76,14 @@ export default {
     this.current = this.sounds[this.index];
     this.player.src = this.current.src;
     this.player.loop = true;
-    setTimeout(() => {
-      this.player.play();
-    }, 1000); //1초 후에 오디오 실행
+    if (this.isPlaying === true) {
+      setTimeout(() => {
+        this.player.play();
+      }, 1000); //1초 후에 오디오 실행
+    }
   },
   data() {
     return {
-      isPlaying: true,
       firstNext: false,
       showFirstScene: true,
       current: {},
@@ -101,10 +102,10 @@ export default {
       this.$emit("ToSecondScene");
     },
     toggleSound() {
-      this.isPlaying = !this.isPlaying;
-      if (this.isPlaying === !true) {
+      this.$emit("toggleSound");
+      if (this.isPlaying === true) {
         this.player.pause();
-      } else if (this.isPlaying === true) {
+      } else if (this.isPlaying === false) {
         this.player.play();
       }
     }, //음소거

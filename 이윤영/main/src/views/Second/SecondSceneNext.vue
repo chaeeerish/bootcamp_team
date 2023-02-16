@@ -40,7 +40,6 @@
     v-bind:isPlaying="isPlaying"
     @toggleSound1="toggleSound"
     @turnOffSound="turnOffSound"
-    @ToResultPage="ToResultPage"
   ></PaintingPageSecond>
 </template>
 
@@ -52,9 +51,6 @@ export default {
   components: { PaintingPageSecond },
   props: ["isPlaying"],
   methods: {
-    ToResultPage() {
-      this.$emit("ToResultPage");
-    },
     moveToSecondPaint() {
       this.secondNext1 = false;
       this.secondPaint = true;

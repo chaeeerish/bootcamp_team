@@ -40,7 +40,6 @@
     v-bind:isPlaying="isPlaying"
     @toggleSound="toggleSound"
     @turnOffSound="turnOffSound"
-    @ToResultPage="ToResultPage"
   ></SecondSceneNext>
 </template>
 
@@ -50,6 +49,7 @@ import SecondSceneNext from "./SecondSceneNext.vue";
 export default {
   name: "FirstScene",
   components: { SecondSceneNext },
+  props: ["isPlaying"],
   setup() {
     const timedTrigger = ref({
       Trigger1: false,
@@ -75,15 +75,16 @@ export default {
     this.current = this.sounds[this.index];
     this.player.src = this.current.src;
     this.player.loop = true;
-    setTimeout(() => {
-      this.player.play();
-    }, 2000); //2초 후에 오디오 실행
+    if (this.isPlaying === true) {
+      setTimeout(() => {
+        this.player.play();
+      }, 2000); //2초 후에 오디오 실행
+    }
   },
   data() {
     return {
       secondNext: false,
       showSecondScene: true,
-      isPlaying: true,
       current: {},
       index: 0,
       sounds: [
@@ -96,14 +97,11 @@ export default {
     };
   },
   methods: {
-    ToResultPage() {
-      this.$emit("ToResultPage");
-    },
     toggleSound() {
-      this.isPlaying = !this.isPlaying;
-      if (this.isPlaying === !true) {
+      this.$emit("toggleSound");
+      if (this.isPlaying === true) {
         this.player.pause();
-      } else if (this.isPlaying === true) {
+      } else if (this.isPlaying === false) {
         this.player.play();
       }
     }, //음소거
