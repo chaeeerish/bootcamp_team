@@ -68,7 +68,7 @@ def showMain():
         # return jsonify({'token': token })
     
         # version 2: 
-        return {"code": 200, "message": "success", "userid": user.userid}
+        return jsonify({'message': 'The username is saved.', "userid": user.userid }), 200
 
         # version 3:
         # return jsonify(
@@ -79,25 +79,22 @@ def showMain():
 		# )
 
         # version 4
-        resp = make_response()
-        resp.set_cookie('userid', str(user.userid))
-        return resp
+        # resp = make_response()
+        # resp.set_cookie('userid', str(user.userid))
+        # return resp
 
-@bp.route('/first/', methods=['POST', 'GET'])
+@bp.route('/tree/', methods=['POST', 'GET'])
 def showFirst():
     # if g.user == None:
     #     return redirect(url_for('views.showMain'))
     if request.method == 'POST':
-        
-        print(request.cookies)
-        print(request.cookies.get('userid'))
-        print(type(request.cookies.get('userid')))
-        print(int(request.cookies.get('userid')))
-
-
         params = request.get_json()
+        userid = params['userid']
+        if userid == None:
+            return 404
+        
         str = params['image'][22:]
-        print(str)
+        # print(str)
 
         imgdata = base64.b64decode(str)
         filename = 'receivedimage.jpg'  # I assume you have a way of picking unique filenames
@@ -122,22 +119,26 @@ def showFirst():
         # 모델 넣을 자리
         resultText = 'great!'
 
-        g.user = User.query.filter_by(request.cookies.get('userid')).first()
-        g.user.image1 = picture
-        g.user.result1 = resultText
+        # user = User.query.filter_by(userid).first()
+        user = db.session.query(User).filter(User.userid == userid).first()
+        user.image1 = picture
+        user.result1 = resultText
         db.session.commit()
 
-        return jsonify({'message': 'The image has been saved.'})
+        return jsonify({'message': 'The image is saved.'}), 200
 
-@bp.route('/second/', methods=['POST', 'GET'])
+@bp.route('/home/', methods=['POST', 'GET'])
 def showSecond():
     # if g.user == None:
     #     return redirect(url_for('views.showMain'))
     if request.method == 'POST':
-        
         params = request.get_json()
-        str = params['image']
-        print(params['image'])
+        userid = params['userid']
+        if userid == None:
+            return 404
+
+        str = params['image'][22:]
+        # print(params['image'])
 
         imgdata = base64.b64decode(str)
         filename = 'some_image.jpg'  # I assume you have a way of picking unique filenames
@@ -149,74 +150,49 @@ def showSecond():
         # 모델 넣을 자리
         resultText = 'great!'
 
-        userid = request.cookies.get('userid')
-        g.user = db.session.query(User).filter(User.userid == userid).first()
-        # modify
-        print(userid)
-        # user = db.session.query(User).filter(User.userid == userid).first()
-        # user = User.query.get_or_404(userid=session.get('userid'))
-        g.user.image2 = picture
-        g.user.result2 = resultText
+        user = db.session.query(User).filter(User.userid == userid).first()
+        user.image2 = picture
+        user.result2 = resultText
         db.session.commit()
-        
-        resp = make_response("Cookie Setting Complete")
-        resp.set_cookie('userid', g.user.userid)
 
-        return resp
+        return jsonify({'message': 'The image is saved.'}), 200
 
 
-@bp.route('/third/', methods=['POST', 'GET'])
-@token_required
+
+@bp.route('/result/', methods=['POST', 'GET'])
 def showThird():
     # if g.user == None:
     #     return redirect(url_for('views.showMain'))
     if request.method == 'GET':
-        # response로 .. ?
-        '''
-        (make_response 함수 사용법)
-        resp = make_response(render_template('error.html'), 404)
-        resp.headers['X-Something'] = 'A value'
-        return resp
-        '''
+        params = request.get_json()
+        userid = params['userid']
+        if userid == None:
+            return 404
 
-        userid = request.cookies.get('userid')
-        g.user = db.session.query(User).filter(User.userid == userid).first()
+        user = db.session.query(User).filter(User.userid == userid).first()
 
-        str_base641 = base64.b64encode(g.user.image1)
+        str_base641 = base64.b64encode(user.image1)
         base64_str1 = str_base641.decode('utf-8')
 
-        str_base642 = base64.b64encode(g.user.image2)
+        str_base642 = base64.b64encode(user.image2)
         base64_str2 = str_base642.decode('utf-8')
 
         # version 1
-        response = {
-            "username": g.user.username,
-            "image1": base64_str1,
-            "image2": base64_str2,
-            "result1": g.user.result1,
-            "result2": g.user.result2
-        }
-        
-        # print(type(g.user))
-        # print(type(g.user.username))
-        # print(type(base64_str1))
-        # print(type(base64_str1))
-        # print(type(g.user.result1))
-        # print(type(g.user.result2))
-
-        '''
-        sitename_base64_str  = 'd2ViaXNmcmVl'
-        sitename_bytes = base64.b64decode(sitename_base64_str )
-        sitename = sitename_bytes .decode('ascii')
-        '''    
+        # response = {
+        #     "username": user.username,
+        #     "image1": base64_str1,
+        #     "image2": base64_str2,
+        #     "result1": user.result1,
+        #     "result2": user.result2
+        # }
 
         # version 1
         return jsonify({
-            "username": g.user.username,
+            "username": user.username,
             "image1": base64_str1,
             "image2": base64_str2,
-            "result1": g.user.result1,
-            "result2": g.user.result2
+            "result1": user.result1,
+            "result2": user.result2
         }), 200
 
         # version 2
