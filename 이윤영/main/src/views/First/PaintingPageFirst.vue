@@ -145,8 +145,9 @@ export default {
       this.$emit("turnOffSound");
 
       var canvasContents = this.$refs.jsCanvas.toDataURL();
-      var file = JSON.stringify({ Image1: canvasContents });
-      fetch("http://localhost:3000/file", {
+      var cookie_userid = this.$cookies.get("userid");
+      var file = JSON.stringify({ 'image': canvasContents, 'userid':cookie_userid });
+      fetch("http://localhost:3000/tree/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

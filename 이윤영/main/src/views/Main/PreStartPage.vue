@@ -33,17 +33,36 @@ export default {
           this.player.play();
           console.log(name);
 
-          var file = JSON.stringify({ userName: name });
+          // this.$cookies.set("test", "testValue");
+          // const cookie = this.$cookies.get("test");
+          // console.log("cookie: ",cookie); //testValue
 
-          fetch("http://localhost:3000/file", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: file,
-          })
-            .then((response) => response.json())
-            .then((data) => console.log(data));
+          var file = JSON.stringify({'username':name});
+          fetch('http://localhost:3000/main/',{
+          method: 'POST',
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: file,
+        })
+            .then((response) => {
+              return response.json();
+            })
+            .then((data) => {
+              console.log(data)
+              this.$cookies.set("userid", data.userid);
+            })
+          // var file = JSON.stringify({ userName: name });
+
+          // fetch("http://localhost:3000/file", {
+          //   method: "POST",
+          //   headers: {
+          //     "Content-Type": "application/json",
+          //   },
+          //   body: file,
+          // })
+          //   .then((response) => response.json())
+          //   .then((data) => console.log(data));
           this.$emit("ToFirstScene");
         } else {
           console.log(name);
