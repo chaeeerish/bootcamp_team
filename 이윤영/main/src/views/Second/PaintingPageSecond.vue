@@ -132,7 +132,7 @@ export default {
       size: 2.5,
       color: "#2c2c2c",
       showModal: false,
-      data: "o",
+      data: "",
       showPaint: true,
     };
   },
