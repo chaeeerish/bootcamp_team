@@ -196,7 +196,7 @@ export default {
       var canvasContents = this.$refs.jsCanvas.toDataURL();
       var cookie_userid = this.$cookies.get("userid");
       var file = JSON.stringify({'image':canvasContents, 'userid':cookie_userid});
-      fetch('http://127.0.0.1:5000/real_test',{
+      fetch('http://localhost:3000/home',{
       method: 'POST',
       headers: {
           "Content-Type": "application/json",
